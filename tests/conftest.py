@@ -9,7 +9,9 @@ import pytest
 import responses as responses_lib
 
 from teamleader.auth import MemoryTokenBackend, OAuth2Handler, Token
+from teamleader.client import TeamleaderClient
 from teamleader.constants import TOKEN_URL
+
 
 
 # ---------------------------------------------------------------------------
@@ -64,6 +66,28 @@ def handler(backend: MemoryTokenBackend) -> OAuth2Handler:
         token_backend=backend,
         scopes=["contacts", "deals"],
     )
+
+
+# ---------------------------------------------------------------------------
+# Client fixture
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture()
+def client(handler: OAuth2Handler) -> TeamleaderClient:
+    """A TeamleaderClient backed by *handler* with a real-clock-valid token.
+
+    Uses a far-future expiry (24 h from now) so the token is never considered
+    expired regardless of when the tests run — no ``@freeze_time`` needed on
+    every test that just wants a ready-to-use client.
+    """
+    live_token = Token(
+        access_token="acc_valid",
+        refresh_token="ref_valid",
+        expires_at=datetime.now(tz=timezone.utc) + timedelta(hours=24),
+    )
+    handler.token_backend.save(live_token)
+    return TeamleaderClient(handler)
 
 
 # ---------------------------------------------------------------------------

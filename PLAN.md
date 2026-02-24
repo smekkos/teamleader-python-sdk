@@ -64,7 +64,7 @@ teamleader-sdk/
 │
 ├── teamleader/
 │   ├── __init__.py             ✅ exports 19 public symbols
-│   ├── client.py               🔲 TeamleaderClient — Phase 6
+│   ├── client.py               ✅ TeamleaderClient — Phase 6
 │   ├── auth.py                 ✅ Token, TokenBackend, MemoryTokenBackend, OAuth2Handler
 │   ├── exceptions.py           ✅ full hierarchy — 9 exception classes
 │   ├── constants.py            ✅ API URLs and defaults
@@ -115,8 +115,9 @@ teamleader-sdk/
 │   ├── test_resources.py       🔲 Phase 11
 │   ├── test_models.py          🔲 Phase 11
 │   └── integration/
-│       ├── conftest.py         ✅ auto-skip without credentials; load_dotenv() added (Phase 5)
+│       ├── conftest.py         ✅ auto-skip without credentials; load_dotenv(); shared integration_backend/handler/client fixtures (Phase 5/6)
 │       ├── test_auth.py        ✅ 3 integration tests — get_valid_token, refresh rotation + .env auto-persist, /users.me API check (Phase 4/5)
+│       ├── test_client.py      ✅ 4 integration tests — _post list, 404, 422, transparent refresh (Phase 6)
 │       └── test_deals.py       🔲 Phase 11
 │
 ├── pyproject.toml              ✅ teamleader-sdk 0.1.0 — dev extras include freezegun, pytest-django
@@ -267,20 +268,43 @@ Each exception carries: `message`, `status_code`, `raw_response`.
 
 ---
 
-### 🔲 Phase 6 — HTTP Client (`teamleader/client.py`)
+### ✅ Phase 6 — HTTP Client (`teamleader/client.py`)
 
 **`TeamleaderClient`**
-- Constructor: `auth_handler: OAuth2Handler`
+- Constructor: `auth_handler: OAuth2Handler`, optional `timeout: int` (default `DEFAULT_TIMEOUT`)
+- Uses `requests.Session` for connection pooling
+- `_auth_headers() -> dict` — calls `get_valid_token()` to inject fresh Bearer per request
 - `_get(path, params) -> dict` — injects Bearer token, calls `_handle_response`
 - `_post(path, json) -> dict` — same
 - `_handle_response(response) -> dict`:
+  - 2xx with empty body → `{}`
   - 401 → `TeamleaderAuthError`
   - 403 → `TeamleaderPermissionError`
   - 404 → `TeamleaderNotFoundError`
-  - 422 → `TeamleaderValidationError` (include body)
-  - 429 → `TeamleaderRateLimitError` (include `Retry-After` header)
+  - 422 → `TeamleaderValidationError`
+  - 429 → `TeamleaderRateLimitError` (`retry_after` from `Retry-After` header; `None` if absent)
   - 5xx → `TeamleaderServerError`
+  - other 4xx → `TeamleaderAPIError`
+- `_extract_message(response)` — understands JSON:API `{"errors":[{"title":"..."}]}`, OAuth `{"error_description":"..."}`, and falls back to `response.text` / `"HTTP <status>"`
 - Public resource attributes: `self.contacts`, `.companies`, `.deals`, `.invoices`, `.quotations`
+
+**Tests added:**
+- `tests/conftest.py` — `client` fixture: `TeamleaderClient` with real-clock-valid token (24 h expiry) so no `@freeze_time` needed per test
+- `tests/test_client.py` — 31 unit tests covering: Bearer header injection, JSON body round-trip, 204 → `{}`, every error status code → correct exception, `retry_after` presence/absence, all `_extract_message` branches, resource attribute types, custom timeout
+- `tests/integration/conftest.py` — extended with shared `integration_backend`, `integration_handler`, `integration_client` fixtures; `_persist_tokens_to_env` helper; `_env` helper (previously duplicated across test modules)
+- `tests/integration/test_client.py` — 4 integration tests (auto-skip without credentials):
+  - `test_post_contacts_list_returns_data_dict` — proves full POST path against real API
+  - `test_nonexistent_id_raises_not_found_with_message` — validates real 404 body shape
+  - `test_invalid_body_raises_validation_error_with_message` — validates real 422 body shape
+  - `test_expired_token_is_transparently_refreshed` — exercises `_auth_headers()` → refresh seam live
+
+**Live test results (2026-02-24): 63/63 passing (unit); 67/67 passing with credentials**
+
+| Suite | Count | Notes |
+|---|---|---|
+| `tests/test_auth.py` | 32 ✅ | unchanged |
+| `tests/test_client.py` | 31 ✅ | Phase 6 — new |
+| `tests/integration/test_client.py` | 4 ⏭ | auto-skip without env vars; 4 ✅ with credentials |
 
 ---
 
@@ -370,7 +394,7 @@ Installation, Django configuration, non-Django usage, OAuth setup, codegen updat
 | 4 | ✅ | Auth layer — `Token`, `OAuth2Handler`, `MemoryTokenBackend` | 3 |
 | 4b | ✅ | Auth tests — 32 unit + 2 integration; conftest fixtures | 4 |
 | 5 | ✅ | Django integration — `TeamleaderToken`, `DatabaseTokenBackend`, `teamleader_setup`, `get_client()` | 4 |
-| 6 | 🔲 | HTTP client — `TeamleaderClient` | 3, 4 |
+| 6 | ✅ | HTTP client — `TeamleaderClient` | 3, 4 |
 | 7 | 🔲 | `CrudResource` base class, `Page` | 6 |
 | 8 | 🔲 | Curated models — `common.py` + per-resource | 2 |
 | 9 | 🔲 | Resource implementations | 7, 8 |

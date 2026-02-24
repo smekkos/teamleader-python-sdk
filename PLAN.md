@@ -28,6 +28,7 @@ Python SDK for the Teamleader Focus API, installable via pip, designed to integr
 | Enum member naming | Strip underscores before digit-prefix guard | Fixes `#00B2B2` → `VALUE_00B2B2` (hex colour edge case) |
 | `oneOf` schemas | **Skipped** in model generation | Discriminated unions cannot be represented as simple dataclasses |
 | `allOf`/`oneOf` in properties | Collapsed to `dict[str, Any]` | Too complex to inline; curated `from_api()` handles proper deserialization |
+| Time-freezing in tests | `@freeze_time` decorator (freezegun) instead of `pytest-freezegun` | Avoids extra dependency; `freezer` fixture not needed when all boundary times are constant (`FROZEN_NOW`) |
 
 ---
 
@@ -61,7 +62,7 @@ teamleader-sdk/
 ├── teamleader/
 │   ├── __init__.py             ✅ exports 19 public symbols
 │   ├── client.py               🔲 TeamleaderClient — Phase 6
-│   ├── auth.py                 🔲 Token, OAuth2Handler — Phase 4
+│   ├── auth.py                 ✅ Token, TokenBackend, MemoryTokenBackend, OAuth2Handler
 │   ├── exceptions.py           ✅ full hierarchy — 9 exception classes
 │   ├── constants.py            ✅ API URLs and defaults
 │   ├── py.typed                ✅ PEP 561 marker
@@ -101,15 +102,16 @@ teamleader-sdk/
 │               └── teamleader_setup.py  🔲 OAuth setup wizard — Phase 5
 │
 ├── tests/
-│   ├── conftest.py             🔲 Phase 11
-│   ├── test_auth.py            🔲 Phase 11
+│   ├── conftest.py             ✅ fixtures: backend, valid_token, expired_token, handler, token_response_body()
+│   ├── test_auth.py            ✅ 32 unit tests — Token, MemoryTokenBackend, OAuth2Handler (Phase 4)
 │   ├── test_resources.py       🔲 Phase 11
 │   ├── test_models.py          🔲 Phase 11
 │   └── integration/
-│       ├── conftest.py         🔲 Phase 11 (auto-skip without credentials)
+│       ├── conftest.py         ✅ auto-skip without credentials
+│       ├── test_auth.py        ✅ 2 integration tests — get_valid_token, refresh rotation (Phase 4)
 │       └── test_deals.py       🔲 Phase 11
 │
-├── pyproject.toml              ✅ teamleader-sdk 0.1.0
+├── pyproject.toml              ✅ teamleader-sdk 0.1.0 — dev extras include freezegun
 ├── .gitignore                  ✅ Python/Django patterns
 ├── .env.example                ✅
 └── README.md                   🔲 Phase 13
@@ -166,11 +168,12 @@ Each exception carries: `message`, `status_code`, `raw_response`.
 
 ---
 
-### 🔲 Phase 4 — Auth Layer (`teamleader/auth.py`)
+### ✅ Phase 4 — Auth Layer (`teamleader/auth.py`)
 
 **`Token` dataclass**
 - Fields: `access_token: str`, `refresh_token: str`, `expires_at: datetime`
 - Property `is_expired`: `True` if `expires_at - now < TOKEN_EXPIRY_MARGIN_SECONDS` (60s)
+- Naive `expires_at` normalised to UTC before comparison
 
 **`TokenBackend` (ABC)**
 - `get() -> Token | None`
@@ -185,6 +188,12 @@ Each exception carries: `message`, `status_code`, `raw_response`.
 - `exchange_code(code: str) -> Token` — POSTs to TOKEN_URL, saves via backend
 - `get_valid_token() -> str` — load → check missing (raise `TeamleaderAuthError`) → check expired (refresh) → return `access_token`
 - `_refresh(token: Token) -> Token` — POSTs with `grant_type=refresh_token`; raises `TeamleaderAuthExpiredError` if rejected
+- `_request_token(payload) -> Token` — shared POST helper; raises `TeamleaderAuthError` on non-2xx or malformed JSON
+
+**Tests added (ahead of Phase 11):**
+- `tests/conftest.py` — shared fixtures (`backend`, `valid_token`, `expired_token`, `handler`, `token_response_body()`) and `FROZEN_NOW` constant
+- `tests/test_auth.py` — 32 unit tests across all classes; time-sensitive tests use `@freeze_time(FROZEN_NOW)` from `freezegun`; HTTP tests use `@responses.activate`
+- `tests/integration/test_auth.py` — 2 integration tests (auto-skipped without env vars)
 
 ---
 
@@ -317,12 +326,13 @@ Installation, Django configuration, non-Django usage, OAuth setup, codegen updat
 | 1 | ✅ | Project scaffold, `pyproject.toml` | — |
 | 2 | ✅ | Codegen — fetch + 3 generators | 1 |
 | 3 | ✅ | Exception hierarchy | 1 |
-| 4 | 🔲 | Auth layer — `Token`, `OAuth2Handler`, `MemoryTokenBackend` | 3 |
+| 4 | ✅ | Auth layer — `Token`, `OAuth2Handler`, `MemoryTokenBackend` | 3 |
+| 4b | ✅ | Auth tests — 32 unit + 2 integration; conftest fixtures | 4 |
 | 5 | 🔲 | Django integration | 4 |
 | 6 | 🔲 | HTTP client — `TeamleaderClient` | 3, 4 |
 | 7 | 🔲 | `CrudResource` base class, `Page` | 6 |
 | 8 | 🔲 | Curated models — `common.py` + per-resource | 2 |
 | 9 | 🔲 | Resource implementations | 7, 8 |
 | 10 | 🔲 | Settings validation in `apps.py` | 5, 6 |
-| 11 | 🔲 | Tests | all |
+| 11 | 🔲 | Tests (resources, models, remaining integration) | all |
 | 12 | 🔲 | README | all |

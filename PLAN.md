@@ -29,6 +29,9 @@ Python SDK for the Teamleader Focus API, installable via pip, designed to integr
 | `oneOf` schemas | **Skipped** in model generation | Discriminated unions cannot be represented as simple dataclasses |
 | `allOf`/`oneOf` in properties | Collapsed to `dict[str, Any]` | Too complex to inline; curated `from_api()` handles proper deserialization |
 | Time-freezing in tests | `@freeze_time` decorator (freezegun) instead of `pytest-freezegun` | Avoids extra dependency; `freezer` fixture not needed when all boundary times are constant (`FROZEN_NOW`) |
+| OAuth scopes in auth URL | **Omit by default** — Teamleader grants app-configured permissions automatically | Passing free-form scope strings returns `invalid_scope 400`; scopes are set at the Marketplace app level, not per-request |
+| Refresh token `.env` auto-persist | `test_refresh_token_rotation` calls `_persist_tokens_to_env()` after rotation | After each rotation, `.env` is rewritten with the new token pair via `dotenv.set_key()`; no manual `get_tokens.py` re-run needed between test sessions |
+| pytest-django settings | `tests/settings_test.py` — SQLite in-memory, `MIGRATION_MODULES={"teamleader_django": None}` | Creates the `TeamleaderToken` table directly from the model; no migration files shipped |
 
 ---
 
@@ -92,26 +95,31 @@ teamleader-sdk/
 │   │   └── quotations.py       🔲 Phase 9
 │   │
 │   └── django/
-│       ├── __init__.py         ✅ import guard + get_client() stub
+│       ├── __init__.py         ✅ import guard + get_client() — wired to DatabaseTokenBackend (Phase 5)
 │       ├── apps.py             🔲 TeamleaderConfig.ready() validation — Phase 10
-│       ├── models.py           🔲 TeamleaderToken singleton — Phase 5
-│       ├── token_store.py      🔲 DatabaseTokenBackend — Phase 5
+│       ├── models.py           ✅ TeamleaderToken singleton (pk=1 enforcement) — Phase 5
+│       ├── token_store.py      ✅ DatabaseTokenBackend (get/save/clear with select_for_update) — Phase 5
 │       ├── middleware.py       ✅ pass-through placeholder
 │       └── management/
 │           └── commands/
-│               └── teamleader_setup.py  🔲 OAuth setup wizard — Phase 5
+│               └── teamleader_setup.py  ✅ OAuth setup wizard (HTTP server on port 9999) — Phase 5
+│
+├── get_tokens.py               ✅ standalone token-fetching helper (dev tool — not part of the package)
 │
 ├── tests/
 │   ├── conftest.py             ✅ fixtures: backend, valid_token, expired_token, handler, token_response_body()
+│   ├── settings_test.py        ✅ minimal Django/SQLite settings for pytest-django (Phase 5)
 │   ├── test_auth.py            ✅ 32 unit tests — Token, MemoryTokenBackend, OAuth2Handler (Phase 4)
+│   ├── test_django_token_store.py  ✅ 12 unit tests — DatabaseTokenBackend ORM (Phase 5)
+│   ├── test_teamleader_setup.py    ✅ 9 unit tests — _CallbackHandler HTTP (Phase 5)
 │   ├── test_resources.py       🔲 Phase 11
 │   ├── test_models.py          🔲 Phase 11
 │   └── integration/
-│       ├── conftest.py         ✅ auto-skip without credentials
-│       ├── test_auth.py        ✅ 2 integration tests — get_valid_token, refresh rotation (Phase 4)
+│       ├── conftest.py         ✅ auto-skip without credentials; load_dotenv() added (Phase 5)
+│       ├── test_auth.py        ✅ 3 integration tests — get_valid_token, refresh rotation + .env auto-persist, /users.me API check (Phase 4/5)
 │       └── test_deals.py       🔲 Phase 11
 │
-├── pyproject.toml              ✅ teamleader-sdk 0.1.0 — dev extras include freezegun
+├── pyproject.toml              ✅ teamleader-sdk 0.1.0 — dev extras include freezegun, pytest-django
 ├── .gitignore                  ✅ Python/Django patterns
 ├── .env.example                ✅
 └── README.md                   🔲 Phase 13
@@ -197,32 +205,65 @@ Each exception carries: `message`, `status_code`, `raw_response`.
 
 ---
 
-### 🔲 Phase 5 — Django Integration
+### ✅ Phase 5 — Django Integration
 
 **`teamleader/django/models.py`** — `TeamleaderToken` singleton model
 - Fields: `access_token`, `refresh_token`, `expires_at`, `updated_at`
-- `save()` enforces singleton (only one row allowed)
+- `save()` enforces singleton by pinning `self.pk = 1` before calling `super().save()`
 - `Meta.app_label = "teamleader_django"` — no migrations shipped; users run `makemigrations`
 
 **`teamleader/django/token_store.py`** — `DatabaseTokenBackend(TokenBackend)`
-- `get()`: reads singleton row, returns `Token` or `None`
-- `save()`: upserts singleton row inside `transaction.atomic()` with `select_for_update()`
+- `get()`: reads singleton row (pk=1), returns `Token` or `None`
+- `save()`: upserts singleton row inside `transaction.atomic()` with `select_for_update()` to prevent multi-worker race conditions
+- `clear()`: deletes the singleton row (no-op if absent)
 
 **`teamleader/django/management/commands/teamleader_setup.py`**
-1. Build authorization URL from settings
-2. Print URL and instruct user to open in browser
-3. Start temporary `http.server` on `settings.TEAMLEADER['OAUTH_CALLBACK_PORT']` (default 9999)
-4. Wait for redirect with `?code=...`
-5. Exchange code → save tokens via `DatabaseTokenBackend`
-6. Print confirmation with expiry time
-7. Shut down temp server
+1. Validates required settings keys, raises `CommandError` if absent
+2. Builds authorization URL via `OAuth2Handler.get_authorization_url()`
+3. Prints URL and instructs user to open in browser
+4. Starts temporary `http.server` (background thread) on `OAUTH_CALLBACK_PORT` (default 9999)
+5. Waits for redirect with `?code=...` via `_CallbackHandler`
+6. Exchanges code → saves tokens via `DatabaseTokenBackend`
+7. Prints confirmation with access-token expiry time
+8. Shuts down temp server via `server.shutdown()`
 
-**`teamleader/django/apps.py`** — `TeamleaderConfig.ready()`
-- Validates required settings keys → `ImproperlyConfigured` with helpful message (Phase 10)
+**`teamleader/django/apps.py`** — `TeamleaderConfig.ready()` — stub, full implementation Phase 10
 
 **`teamleader/django/__init__.py`** — `get_client() -> TeamleaderClient`
-- Reads `settings.TEAMLEADER`, constructs `DatabaseTokenBackend`
+- Reads `settings.TEAMLEADER`, constructs `DatabaseTokenBackend` + `OAuth2Handler`
 - Returns configured `TeamleaderClient`
+
+**`get_tokens.py`** — standalone dev helper (not part of the package)
+- Interactive script to obtain an initial access/refresh token pair on a dev machine
+- Starts port-9999 local server, captures OAuth callback, exchanges code, prints `.env` block
+- Fixed: omit `scope` parameter from auth URL (Teamleader grants app-configured permissions automatically; passing free-form scope strings returns `invalid_scope 400`)
+
+**`tests/integration/conftest.py`** — added `load_dotenv()` at module level
+- Enables `.env`-based credentials for integration tests without shell exports
+
+**`tests/settings_test.py`** — minimal Django settings for pytest-django
+- SQLite in-memory database; `MIGRATION_MODULES = {"teamleader_django": None}` to bypass missing migrations; `USE_TZ = True`
+
+**`tests/test_django_token_store.py`** — 12 unit tests for `DatabaseTokenBackend`
+- Covers: `get()` returns `None` on empty table; `save()` creates pk=1 singleton; second `save()` upserts (no duplicate rows); `get()` round-trips timezone-aware `expires_at`; `clear()` deletes row; `clear()` is idempotent; full lifecycle cycle
+- Uses `@pytest.mark.django_db` against real in-memory SQLite; no migrations needed
+
+**`tests/test_teamleader_setup.py`** — 9 unit tests for `_CallbackHandler`
+- Covers: code capture from query string; `None` when code absent; multiple params; URL-decoded values; 200/400 status codes; HTML content-type; success message in body
+- Uses real `HTTPServer` on an ephemeral OS-assigned port — no mocking
+
+**`tests/integration/test_auth.py`** — extended to 3 tests
+- `_persist_tokens_to_env()` helper rewrites `.env` via `dotenv.set_key()` after each successful rotation — **no manual `get_tokens.py` re-run needed between test sessions**
+- New: `test_stored_access_token_is_accepted_by_api` — calls `GET /users.me` with the access token obtained from `get_valid_token()`; asserts HTTP 200 and `"data"` key in response
+
+**Live test results (2026-02-24, spec v1.112.0) — 56/56 passing**
+
+| Suite | Count | Notes |
+|---|---|---|
+| `tests/test_django_token_store.py` | 12 ✅ | DatabaseTokenBackend ORM — real SQLite |
+| `tests/test_teamleader_setup.py` | 9 ✅ | _CallbackHandler — real HTTP server |
+| `tests/test_auth.py` | 32 ✅ | Unit — Token, MemoryBackend, OAuth2Handler |
+| `tests/integration/test_auth.py` | 3 ✅ | Live Teamleader API — token valid, rotation, /users.me 200 |
 
 ---
 
@@ -328,7 +369,7 @@ Installation, Django configuration, non-Django usage, OAuth setup, codegen updat
 | 3 | ✅ | Exception hierarchy | 1 |
 | 4 | ✅ | Auth layer — `Token`, `OAuth2Handler`, `MemoryTokenBackend` | 3 |
 | 4b | ✅ | Auth tests — 32 unit + 2 integration; conftest fixtures | 4 |
-| 5 | 🔲 | Django integration | 4 |
+| 5 | ✅ | Django integration — `TeamleaderToken`, `DatabaseTokenBackend`, `teamleader_setup`, `get_client()` | 4 |
 | 6 | 🔲 | HTTP client — `TeamleaderClient` | 3, 4 |
 | 7 | 🔲 | `CrudResource` base class, `Page` | 6 |
 | 8 | 🔲 | Curated models — `common.py` + per-resource | 2 |

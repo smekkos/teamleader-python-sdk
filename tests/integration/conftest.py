@@ -1,9 +1,10 @@
 """Integration test fixtures.
 
-Full implementation in Phase 11.
-
 Auto-skips all integration tests when TEAMLEADER_INTEGRATION_CLIENT_ID
-is not set in the environment, so CI passes without real credentials.
+is not set in the environment (or .env file), so CI passes without
+real credentials.
+
+Full resource fixtures live in Phase 11.
 """
 
 from __future__ import annotations
@@ -11,6 +12,16 @@ from __future__ import annotations
 import os
 
 import pytest
+
+# Load .env from the project root if python-dotenv is installed.
+# This lets developers run integration tests with just a .env file
+# rather than having to export every variable into the shell.
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass  # No python-dotenv — rely on real environment variables.
 
 
 def pytest_collection_modifyitems(items: list[pytest.Item]) -> None:

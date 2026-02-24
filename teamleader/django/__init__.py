@@ -56,6 +56,27 @@ def get_client() -> TeamleaderClient:
     :class:`~teamleader.django.token_store.DatabaseTokenBackend`, and
     returns a ready-to-use client.
 
-    Full implementation in Phase 5.
+    Example::
+
+        from teamleader.django import get_client
+
+        client = get_client()
+        deals = client.deals.list()
     """
-    raise NotImplementedError  # Phase 5
+    from django.conf import settings
+
+    from teamleader.auth import OAuth2Handler
+    from teamleader.client import TeamleaderClient
+    from teamleader.django.token_store import DatabaseTokenBackend
+
+    conf: dict = getattr(settings, "TEAMLEADER", {})
+
+    backend = DatabaseTokenBackend()
+    auth_handler = OAuth2Handler(
+        client_id=conf["CLIENT_ID"],
+        client_secret=conf["CLIENT_SECRET"],
+        redirect_uri=conf["REDIRECT_URI"],
+        token_backend=backend,
+        scopes=conf.get("SCOPES", []),
+    )
+    return TeamleaderClient(auth_handler=auth_handler)

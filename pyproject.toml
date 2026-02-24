@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "teamleader-sdk"
+version = "0.1.0"
+description = "Python SDK for the Teamleader Focus API"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.28",
+]
+
+[project.optional-dependencies]
+django = [
+    "django>=4.2",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "responses",
+    "ruff",
+    "mypy",
+    "black",
+    "django>=4.2",
+    "PyYAML>=6.0",
+    "python-dotenv",
+]
+
+[project.urls]
+Repository = "https://github.com/yourorg/teamleader-python-sdk"
+
+[tool.setuptools.packages.find]
+include = ["teamleader*"]
+
+[tool.setuptools.package-data]
+teamleader = ["py.typed"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = []
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["teamleader"]
+omit = ["teamleader/_generated/*"]

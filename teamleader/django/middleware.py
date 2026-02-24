@@ -1,0 +1,23 @@
+"""Optional Django middleware for the Teamleader SDK.
+
+Placeholder for Phase 5 / future use.
+"""
+
+from __future__ import annotations
+
+from typing import Callable
+
+from django.http import HttpRequest, HttpResponse
+
+
+class TeamleaderMiddleware:
+    """Placeholder middleware — extend as needed.
+
+    Currently a no-op pass-through.
+    """
+
+    def __init__(self, get_response: Callable[[HttpRequest], HttpResponse]) -> None:
+        self.get_response = get_response
+
+    def __call__(self, request: HttpRequest) -> HttpResponse:
+        return self.get_response(request)

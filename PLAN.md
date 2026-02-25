@@ -86,8 +86,8 @@ teamleader-sdk/
 │   │   └── quotation.py        🔲 Quotation
 │   │
 │   ├── resources/
-│   │   ├── __init__.py         🔲 Phase 7/9
-│   │   ├── base.py             🔲 Page[M], CrudResource[M] — Phase 7
+│   │   ├── __init__.py         ✅ Phase 7/9
+│   │   ├── base.py             ✅ Page[M], CrudResource[M] — Phase 7
 │   │   ├── contacts.py         🔲 Phase 9
 │   │   ├── companies.py        🔲 Phase 9
 │   │   ├── deals.py            🔲 Phase 9
@@ -112,7 +112,7 @@ teamleader-sdk/
 │   ├── test_auth.py            ✅ 32 unit tests — Token, MemoryTokenBackend, OAuth2Handler (Phase 4)
 │   ├── test_django_token_store.py  ✅ 12 unit tests — DatabaseTokenBackend ORM (Phase 5)
 │   ├── test_teamleader_setup.py    ✅ 9 unit tests — _CallbackHandler HTTP (Phase 5)
-│   ├── test_resources.py       🔲 Phase 11
+│   ├── test_resources.py       ✅ 43 unit tests — Page, CrudResource (Phase 7)
 │   ├── test_models.py          🔲 Phase 11
 │   └── integration/
 │       ├── conftest.py         ✅ auto-skip without credentials; load_dotenv(); shared integration_backend/handler/client fixtures (Phase 5/6)
@@ -308,30 +308,52 @@ Each exception carries: `message`, `status_code`, `raw_response`.
 
 ---
 
-### 🔲 Phase 7 — Resource Base (`teamleader/resources/base.py`)
+### ✅ Phase 7 — Resource Base (`teamleader/resources/base.py`)
 
 **`Page[M]`** dataclass
 - Fields: `data: list[M]`, `total_count: int`, `current_page: int`, `page_size: int`
-- Private: `_resource`, `_filters`
-- `has_next` property
-- `next() -> Page[M]`
+- Private (`init=False`): `_resource`, `_filters` — set by `CrudResource` after construction
+- `has_next` property: `current_page * page_size < total_count`
+- `next() -> Page[M]` — increments page, forwards `_filters`; raises `ValueError` if already on last page
 
 **`CrudResource[M]`**
 - Class attrs: `prefix: str`, `model: type[M]`
-- `_path(operation) -> str`
-- `_deserialise(data) -> M` — calls `model.from_api(data)`
-- `list(*, page, page_size, **filters) -> Page[M]`
-- `get(id) -> M`
-- `create(**kwargs) -> M` — POSTs to `.add`, fetches by returned ID
-- `update(id, **kwargs) -> M` — POSTs to `.update`, re-fetches
-- `delete(id) -> None`
-- `iterate(page_size, **filters) -> Iterator[M]`
+- `_path(operation) -> str` — builds `"prefix.operation"`
+- `_deserialise(data) -> M` — delegates to `model.from_api(data)`
+- `list(*, page, page_size, **filters) -> Page[M]` — POSTs `{"page": {"size": N, "number": N}, **filters}` to `.list`
+- `get(id) -> M` — POSTs to `.info` (Teamleader convention)
+- `create(**kwargs) -> M` — POSTs to `.add`, re-fetches full object via `get(returned_id)`
+- `update(id, **kwargs) -> M` — POSTs to `.update`, re-fetches via `get(id)`
+- `delete(id) -> None` — POSTs to `.delete`
+- `iterate(page_size, **filters) -> Iterator[M]` — generator; transparently fetches all pages
+
+**Tests added:**
+- `tests/test_resources.py` — 43 unit tests across 10 classes; `client._post` mocked with `unittest.mock.MagicMock` (no HTTP I/O)
+  - `TestPageHasNext` (6): boundary conditions for `has_next`
+  - `TestPageNext` (4): page forwarding, filter passthrough, `ValueError` guard
+  - `TestCrudResourcePath` (4): `_path()` string construction
+  - `TestCrudResourceList` (9): POST body shape, page metadata, filter merging, `_resource`/`_filters` wiring
+  - `TestCrudResourceGet` (3): `.info` endpoint, body, deserialization
+  - `TestCrudResourceCreate` (4): `.add` → re-fetch by ID sequence
+  - `TestCrudResourceUpdate` (4): `.update` → re-fetch sequence
+  - `TestCrudResourceDelete` (2): `.delete` call, `None` return
+  - `TestCrudResourceIterate` (7): single/multi-page, exact call count, filter/page_size forwarding, empty set
+
+**Live test results (2026-02-25): 127/127 passing**
+
+| Suite | Count | Notes |
+|---|---|---|
+| `tests/test_auth.py` | 32 ✅ | unchanged |
+| `tests/test_client.py` | 31 ✅ | unchanged |
+| `tests/test_django_token_store.py` | 12 ✅ | unchanged |
+| `tests/test_teamleader_setup.py` | 9 ✅ | unchanged |
+| `tests/test_resources.py` | 43 ✅ | Phase 7 — new |
 
 ---
 
 ### 🔲 Phase 8 — Curated Models
 
-**`teamleader/models/common.py`** — `Address`, `Email`, `Telephone`, `Money`, `CustomField`, `WebLink`
+**`teamleader/models/common.py`** — `Users`, `Custom Fields`, `Contacts`, `Companies`, `Business Types`, `Tags`, `Addresses`,`Quotations`, `Orders`
 Each has `from_api(dict) -> Self` and `to_dict() -> dict`.
 
 **Per-resource model files** — inherit from generated base, add:
@@ -339,8 +361,6 @@ Each has `from_api(dict) -> Self` and `to_dict() -> dict`.
 - `to_dict() -> dict` for sending back to the API
 - Computed properties:
   - `Contact.full_name` → `"First Last"`
-  - `Invoice.is_overdue` → due date past + status not paid
-
 ---
 
 ### 🔲 Phase 9 — Resource Implementations
@@ -395,7 +415,7 @@ Installation, Django configuration, non-Django usage, OAuth setup, codegen updat
 | 4b | ✅ | Auth tests — 32 unit + 2 integration; conftest fixtures | 4 |
 | 5 | ✅ | Django integration — `TeamleaderToken`, `DatabaseTokenBackend`, `teamleader_setup`, `get_client()` | 4 |
 | 6 | ✅ | HTTP client — `TeamleaderClient` | 3, 4 |
-| 7 | 🔲 | `CrudResource` base class, `Page` | 6 |
+| 7 | ✅ | `CrudResource` base class, `Page` | 6 |
 | 8 | 🔲 | Curated models — `common.py` + per-resource | 2 |
 | 9 | 🔲 | Resource implementations | 7, 8 |
 | 10 | 🔲 | Settings validation in `apps.py` | 5, 6 |

@@ -30,8 +30,11 @@ Python SDK for the Teamleader Focus API, installable via pip, designed to integr
 | `allOf`/`oneOf` in properties | Collapsed to `dict[str, Any]` | Too complex to inline; curated `from_api()` handles proper deserialization |
 | Time-freezing in tests | `@freeze_time` decorator (freezegun) instead of `pytest-freezegun` | Avoids extra dependency; `freezer` fixture not needed when all boundary times are constant (`FROZEN_NOW`) |
 | OAuth scopes in auth URL | **Omit by default** — Teamleader grants app-configured permissions automatically | Passing free-form scope strings returns `invalid_scope 400`; scopes are set at the Marketplace app level, not per-request |
-| Refresh token `.env` auto-persist | `test_refresh_token_rotation` calls `_persist_tokens_to_env()` after rotation | After each rotation, `.env` is rewritten with the new token pair via `dotenv.set_key()`; no manual `get_tokens.py` re-run needed between test sessions |
-| pytest-django settings | `tests/settings_test.py` — SQLite in-memory, `MIGRATION_MODULES={"teamleader_django": None}` | Creates the `TeamleaderToken` table directly from the model; no migration files shipped |
+| Refresh token `.env` auto-persist | `test_refresh_token_rotation` calls `_persist_tokens_to_env()` — writes both `os.environ` **and** `.env` file | Writing only `.env` leaves `os.environ` stale; subsequent fixtures in the same pytest session must see the new token pair immediately |
+| pytest-django settings | `tests/settings_test.py` — SQLite in-memory, `MIGRATION_MODULES={"teamleader_django": None}`, minimal `TEAMLEADER` dict | Creates the `TeamleaderToken` table directly from the model; `TEAMLEADER` dict makes `TeamleaderConfig.ready()` pass at startup |
+| Pagination include | `CrudResource.list()` auto-injects `pagination` into `includes` before every POST | `meta.matches` is **opt-in** — only returned when `includes=pagination` is sent; absent for `contacts.list` (unsupported) so a length-heuristic fallback is also implemented |
+| Deal status enum | `Deal.status` is `str` (not a closed enum); computed properties guard known values only | Live API returns undocumented values (e.g. `"new"`) not in spec v1.112.0; a closed enum would crash on forward-compatible reads |
+| List vs info response shapes | `contacts.list` returns `primary_address` (flat object); `contacts.info` returns `addresses` (typed list) | Spec intentionally uses different shapes for list vs detail; `Contact.from_api()` handles both via `.get()` defaults |
 
 ---
 
@@ -119,7 +122,11 @@ teamleader-sdk/
 │       ├── conftest.py         ✅ auto-skip without credentials; load_dotenv(); shared integration_backend/handler/client fixtures (Phase 5/6)
 │       ├── test_auth.py        ✅ 3 integration tests — get_valid_token, refresh rotation + .env auto-persist, /users.me API check (Phase 4/5)
 │       ├── test_client.py      ✅ 4 integration tests — _post list, 404, 422, transparent refresh (Phase 6)
-│       └── test_deals.py       🔲 Phase 11
+│       ├── test_contacts.py    ✅ 13 integration tests — list, get, model props, tag/untag, link/unlink (Phase 11)
+│       ├── test_companies.py   ✅ 10 integration tests — list, get, model props, tag/untag (Phase 11)
+│       ├── test_deals.py       ✅ 11 integration tests — list, get, status props, list_phases, list_sources (Phase 11)
+│       ├── test_invoices.py    ✅ 10 integration tests — list, get, is_paid/is_overdue/total_due, download (Phase 11)
+│       └── test_quotations.py  ✅ 7 integration tests — list, get, status props, total_* (Phase 11)
 │
 ├── pyproject.toml              ✅ teamleader-sdk 0.1.0 — dev extras include freezegun, pytest-django
 ├── .gitignore                  ✅ Python/Django patterns
@@ -321,7 +328,7 @@ Each exception carries: `message`, `status_code`, `raw_response`.
 - Class attrs: `prefix: str`, `model: type[M]`
 - `_path(operation) -> str` — builds `"prefix.operation"`
 - `_deserialise(data) -> M` — delegates to `model.from_api(data)`
-- `list(*, page, page_size, **filters) -> Page[M]` — POSTs `{"page": {"size": N, "number": N}, **filters}` to `.list`
+- `list(*, page, page_size, **filters) -> Page[M]` — POSTs `{"page": {"size": N, "number": N}, **filters, "includes": "...,pagination"}` to `.list`; auto-injects `pagination` into `includes` so `meta.matches` is returned where supported; falls back to page-fill heuristic when absent
 - `get(id) -> M` — POSTs to `.info` (Teamleader convention)
 - `create(**kwargs) -> M` — POSTs to `.add`, re-fetches full object via `get(returned_id)`
 - `update(id, **kwargs) -> M` — POSTs to `.update`, re-fetches via `get(id)`
@@ -432,11 +439,38 @@ Notes:
 
 ---
 
-### 🔲 Phase 11 — Remaining Integration Tests
+### ✅ Phase 11 — Integration Tests
 
-**Integration tests** (`tests/integration/`, skipped without env vars)
-- `test_deals.py`: list deals, get deal, move phase; read-only where possible
-- Additional create+delete cycles for contacts, companies for mutation coverage
+58 integration tests across 7 files — all auto-skip when `TEAMLEADER_INTEGRATION_CLIENT_ID` is absent.
+
+| File | Tests | Live result (sandbox) |
+|---|---|---|
+| `test_auth.py` | 3 | 3 ✅ |
+| `test_client.py` | 4 | 4 ✅ |
+| `test_contacts.py` | 13 | 9 ✅ 2 ⏭ (no addresses/custom fields in sandbox) |
+| `test_companies.py` | 10 | 9 ✅ 1 ⏭ (no custom fields in sandbox) |
+| `test_deals.py` | 11 | 11 ✅ |
+| `test_invoices.py` | 10 | 0 ✅ 10 ⏭ (no invoices in sandbox) |
+| `test_quotations.py` | 7 | 1 ✅ 6 ⏭ (no quotations in sandbox) |
+| **Total** | **58** | **39 ✅ 19 ⏭ 0 ❌** |
+
+**Design principles:**
+- Read-only by default; mutations use `try/finally` for guaranteed cleanup
+- `_first_or_skip()` helper skips gracefully when sandbox has no data
+- Write operations (book, credit, win/lose) excluded — too high-impact to automate
+- Iterate tests use `islice(n=20)` to cap at one page — prevents rate-limit exhaustion on large accounts
+- `_persist_tokens_to_env()` updates both `os.environ` and `.env` so token rotation within a session propagates to subsequent tests
+
+**API spec-vs-reality discoveries (fixed during live testing):**
+
+| # | Issue | Root cause | Fix |
+|---|---|---|---|
+| 1 | `KeyError: 'meta'` on every `list()` call | `meta.matches` is opt-in via `includes=pagination`; not returned by default | `base.py` now auto-injects `pagination` into `includes`; falls back to length heuristic when still absent (contacts.list doesn't support this include) |
+| 2 | `test_post_contacts_list_returns_data_dict` failing | Previous assertion `"meta" in result` was wrong without `includes=pagination` | Updated to assert `isinstance(result["data"], list)` |
+| 3 | `contacts.add {}` returns 400 not 422 | API changed validation error status code | Test updated to accept `status_code in (400, 422)` via `TeamleaderAPIError` parent |
+| 4 | `test_expired_token` failed with `TeamleaderAuthExpiredError` | `test_refresh_token_rotation` rotated the refresh token and wrote new tokens to `.env` but not `os.environ`; next test loaded stale token from env | `_persist_tokens_to_env()` now also writes to `os.environ` immediately |
+| 5 | Rate limit errors during integration run | `iterate(page_size=5)` on 493 companies = 99 API calls per test | Iterate tests now use `islice(iterate(page_size=20), 20)` to stay within one page |
+| 6 | `deal.status` in `{'open','won','lost'}` assertion fails | API also returns `"new"` (undocumented pipeline-stage status) | Test updated to accept any non-empty string; status-boolean test asserts `sum(flags) <= 1` |
 
 ---
 
@@ -470,5 +504,5 @@ Notes:
 | 8 | ✅ | Curated models — `common.py` + per-resource; 111 unit tests | 2 |
 | 9 | ✅ | Resource implementations + 50 unit tests | 7, 8 |
 | 10 | ✅ | Settings validation in `apps.py`; 16 unit tests | 5, 6 |
-| 11 | 🔲 | Remaining integration tests | all |
+| 11 | ✅ | 58 integration tests across 5 resources; all auto-skip without credentials | all |
 | 12 | ✅ | README | all |

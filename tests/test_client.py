@@ -429,3 +429,97 @@ class TestExtractMessage:
             client._post("contacts.list")
 
         assert exc_info.value.message == "HTTP 500"
+
+
+# ---------------------------------------------------------------------------
+# client.call() — generic endpoint bridge
+# ---------------------------------------------------------------------------
+
+# Real operation IDs used in tests (chosen for stable required_params count):
+#   "activityTypes.list"  — required_params=(), optional_params=('filter', 'page')
+#   "departments.info"    — required_params=('id',), optional_params=()
+_ACTIVITY_URL = f"{BASE_URL}/activityTypes.list"
+_DEPARTMENTS_INFO_URL = f"{BASE_URL}/departments.info"
+
+
+class TestClientCall:
+    def test_unknown_operation_id_raises_value_error(
+        self, client: TeamleaderClient
+    ) -> None:
+        with pytest.raises(ValueError, match="Unknown operation_id"):
+            client.call("totally.unknown.endpoint")
+
+    def test_unknown_operation_id_message_mentions_endpoints_dict(
+        self, client: TeamleaderClient
+    ) -> None:
+        with pytest.raises(ValueError, match="ENDPOINTS"):
+            client.call("not.real")
+
+    def test_missing_required_param_raises_value_error(
+        self, client: TeamleaderClient
+    ) -> None:
+        # departments.info requires 'id'
+        with pytest.raises(ValueError, match="Missing required parameter"):
+            client.call("departments.info")  # id is missing
+
+    def test_missing_required_param_message_names_the_param(
+        self, client: TeamleaderClient
+    ) -> None:
+        with pytest.raises(ValueError, match="'id'"):
+            client.call("departments.info")  # id is missing
+
+    @responses.activate
+    def test_call_no_required_params_posts_to_correct_url(
+        self, client: TeamleaderClient
+    ) -> None:
+        responses.add(
+            responses.POST,
+            _ACTIVITY_URL,
+            json={"data": []},
+            status=200,
+        )
+        result = client.call("activityTypes.list")
+        assert isinstance(result, dict)
+        assert len(responses.calls) == 1
+        assert responses.calls[0].request.url == _ACTIVITY_URL
+
+    @responses.activate
+    def test_call_with_required_param_posts_successfully(
+        self, client: TeamleaderClient
+    ) -> None:
+        dept_id = "67c576e7-7e6f-465d-b6ab-a864f6e5e95b"
+        responses.add(
+            responses.POST,
+            _DEPARTMENTS_INFO_URL,
+            json={"data": {"id": dept_id, "name": "HR"}},
+            status=200,
+        )
+        result = client.call("departments.info", id=dept_id)
+        assert result["data"]["id"] == dept_id
+
+    @responses.activate
+    def test_call_returns_raw_dict(self, client: TeamleaderClient) -> None:
+        responses.add(
+            responses.POST,
+            _ACTIVITY_URL,
+            json={"data": [{"id": "abc", "name": "Sales call"}]},
+            status=200,
+        )
+        result = client.call("activityTypes.list")
+        assert isinstance(result, dict)
+        assert result["data"][0]["name"] == "Sales call"
+
+    @responses.activate
+    def test_call_empty_kwargs_sends_no_body(
+        self, client: TeamleaderClient
+    ) -> None:
+        responses.add(
+            responses.POST,
+            _ACTIVITY_URL,
+            json={"data": []},
+            status=200,
+        )
+        client.call("activityTypes.list")
+        sent_body = responses.calls[0].request.body
+        # kwargs is empty → body should be None (no JSON body sent)
+        assert sent_body is None

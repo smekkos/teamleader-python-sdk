@@ -29,6 +29,9 @@ dev = [
     "django>=4.2",
     "PyYAML>=6.0",
     "python-dotenv",
+    # documentation
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.25",
 ]
 
 [project.urls]

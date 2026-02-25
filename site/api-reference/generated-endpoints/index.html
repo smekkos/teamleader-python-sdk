@@ -1,0 +1,4485 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Python SDK for the Teamleader Focus API">
+      
+      
+      
+      
+        <link rel="prev" href="../exceptions/">
+      
+      
+        <link rel="next" href="../../codegen/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Generated API Endpoint Reference - teamleader-sdk</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#generated-api-endpoint-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="teamleader-sdk" class="md-header__button md-logo" aria-label="teamleader-sdk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            teamleader-sdk
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Generated API Endpoint Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/yourorg/teamleader-python-sdk" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yourorg/teamleader-python-sdk
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/django/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../models/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../codegen/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Codegen
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="teamleader-sdk" class="md-nav__button md-logo" aria-label="teamleader-sdk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    teamleader-sdk
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/yourorg/teamleader-python-sdk" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yourorg/teamleader-python-sdk
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/django/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Django Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/non-django/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Non-Django Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/error-handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Handling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models — API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources — API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth — API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TeamleaderClient — API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exceptions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exceptions — API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generated API Endpoint Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generated API Endpoint Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#calling-endpoints-via-clientcall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calling endpoints via client.call()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#departments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Departments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#teams" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Teams
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Fields
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#work-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Work Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#document-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Document Templates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#currencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Currencies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Email Tracking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#closing-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Closing Days
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#day-off-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Day Off Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#days-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Days Off
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contacts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contacts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#companies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Companies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#business-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Business Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tags
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#addresses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addresses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deal-pipelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deal Pipelines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deal-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deal Phases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deal-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deal Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quotations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#orders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Orders
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#meetings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meetings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#call-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Call Outcomes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calendar-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calendar events
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#activity-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Activity Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invoices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invoices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credit-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credit Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subscriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subscriptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tax-rates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tax Rates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#payment-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Payment Terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#withholding-tax-rates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Withholding Tax Rates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commercial-discounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commercial Discounts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#payment-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Payment Methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expenses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expenses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bookkeeping-submissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bookkeeping Submissions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incoming-credit-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incoming Credit Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incoming-invoices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incoming Invoices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#receipts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Receipts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#product-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Product Categories
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#products" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Products
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#units-of-measure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Units of Measure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#price-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Price Lists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#legacy-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legacy Projects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#legacy-milestones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legacy Milestones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Projects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#external-parties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External parties
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-lines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project lines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Groups
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tasks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Materials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tasks_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tasks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Tracking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tickets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tickets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ticket-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ticket Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mail-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mail Templates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migrating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migrating
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#webhooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Webhooks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cloud Platforms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accounts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plannable-items" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plannable items
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reservations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reservations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-availability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User availability
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../codegen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Codegen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="generated-api-endpoint-reference">Generated API Endpoint Reference<a class="headerlink" href="#generated-api-endpoint-reference" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Auto-generated from <code>codegen/spec/api.yaml</code> (spec <strong>v1.112.0</strong>).
+Run <code>python codegen/generate_docs_endpoints.py</code> to refresh after a spec update.</p>
+</div>
+<p>Every Teamleader Focus API endpoint is a <strong>POST</strong> request.  The table below
+groups endpoints by the resource tag used in the official Teamleader documentation.</p>
+<hr />
+<h2 id="calling-endpoints-via-clientcall">Calling endpoints via <code>client.call()</code><a class="headerlink" href="#calling-endpoints-via-clientcall" title="Permanent link">&para;</a></h2>
+<p>Every endpoint listed here can be called through
+<a href="../client/#teamleader.client.TeamleaderClient.call"><code>TeamleaderClient.call()</code></a>
+using the <strong>operation ID</strong> shown in the table (the <code>• client.call()</code> column):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Example — list activity types (no required params)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">&quot;activityTypes.list&quot;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;number&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]:</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Example — fetch a department by ID (id is required)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">dept</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">&quot;departments.info&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;67c576e7-7e6f-465d-b6ab-a864f6e5e95b&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">dept</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>call()</code> validates required parameters <strong>before</strong> making the HTTP request
+and raises <code>ValueError</code> with a helpful message if any are missing.
+The response is a raw <code>dict</code> — no model deserialisation.</p>
+</div>
+<hr />
+<h2 id="departments">Departments<a class="headerlink" href="#departments" title="Permanent link">&para;</a></h2>
+<p>Departments are used to split quotations and invoices for different legal entities or within one organisation.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/departments.info</code></td>
+<td><code>departments.info</code></td>
+<td>Get details for a single department</td>
+<td><code>client.call('departments.info')</code></td>
+</tr>
+<tr>
+<td><code>/departments.list</code></td>
+<td><code>departments.list</code></td>
+<td>Get a list of departments</td>
+<td><code>client.call('departments.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="users">Users<a class="headerlink" href="#users" title="Permanent link">&para;</a></h2>
+<p>Users are co-workers in a Teamleader account.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/users.getWeekSchedule</code></td>
+<td><code>users.getWeekSchedule</code></td>
+<td>Returns information about week schedule of a user. Only available with the <em>Weekly working schedule</em> feature</td>
+<td><code>client.call('users.getWeekSchedule')</code></td>
+</tr>
+<tr>
+<td><code>/users.info</code></td>
+<td><code>users.info</code></td>
+<td>Get details for a single user</td>
+<td><code>client.call('users.info')</code></td>
+</tr>
+<tr>
+<td><code>/users.list</code></td>
+<td><code>users.list</code></td>
+<td>Get a list of all users</td>
+<td><code>client.call('users.list')</code></td>
+</tr>
+<tr>
+<td><code>/users.listDaysOff</code></td>
+<td><code>users.listDaysOff</code></td>
+<td>Returns information about days off of a given user</td>
+<td><code>client.call('users.listDaysOff')</code></td>
+</tr>
+<tr>
+<td><code>/users.me</code></td>
+<td><code>users.me</code></td>
+<td>Get the current authenticated user</td>
+<td><code>client.call('users.me')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="teams">Teams<a class="headerlink" href="#teams" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/teams.list</code></td>
+<td><code>teams.list</code></td>
+<td>Gets a list of all teams</td>
+<td><code>client.call('teams.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="custom-fields">Custom Fields<a class="headerlink" href="#custom-fields" title="Permanent link">&para;</a></h2>
+<p>Custom fields are used to add additional data/properties to entities within Teamleader.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/customFieldDefinitions.create</code></td>
+<td><code>customFieldDefinitions.create</code></td>
+<td>Create a custom field definition</td>
+<td><code>client.call('customFieldDefinitions.create')</code></td>
+</tr>
+<tr>
+<td><code>/customFieldDefinitions.info</code></td>
+<td><code>customFieldDefinitions.info</code></td>
+<td>Get info about a specific custom field definition</td>
+<td><code>client.call('customFieldDefinitions.info')</code></td>
+</tr>
+<tr>
+<td><code>/customFieldDefinitions.list</code></td>
+<td><code>customFieldDefinitions.list</code></td>
+<td>Get a list of all the definitions of custom fields</td>
+<td><code>client.call('customFieldDefinitions.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="work-types">Work Types<a class="headerlink" href="#work-types" title="Permanent link">&para;</a></h2>
+<p>Work types define the type of work for events or time tracking. Hourly rates can be added to work types, so that the work can be billed to a customer.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/workTypes.list</code></td>
+<td><code>workTypes.list</code></td>
+<td>Get a list of all work types, sorted alphabetically (on their name)</td>
+<td><code>client.call('workTypes.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="document-templates">Document Templates<a class="headerlink" href="#document-templates" title="Permanent link">&para;</a></h2>
+<p>Document Templates</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/documentTemplates.list</code></td>
+<td><code>documentTemplates.list</code></td>
+<td>Get a list of all document templates</td>
+<td><code>client.call('documentTemplates.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="currencies">Currencies<a class="headerlink" href="#currencies" title="Permanent link">&para;</a></h2>
+<p>Currencies</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/currencies.exchangeRates</code></td>
+<td><code>currencies.exchangeRates</code></td>
+<td>Get a list of exchange rates for a provided currency</td>
+<td><code>client.call('currencies.exchangeRates')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h2>
+<p>Notes</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/notes.create</code></td>
+<td><code>notes.create</code></td>
+<td>Create a new note</td>
+<td><code>client.call('notes.create')</code></td>
+</tr>
+<tr>
+<td><code>/notes.list</code></td>
+<td><code>notes.list</code></td>
+<td>Get a list of all notes</td>
+<td><code>client.call('notes.list')</code></td>
+</tr>
+<tr>
+<td><code>/notes.update</code></td>
+<td><code>notes.update</code></td>
+<td>Update an existing note</td>
+<td><code>client.call('notes.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="email-tracking">Email Tracking<a class="headerlink" href="#email-tracking" title="Permanent link">&para;</a></h2>
+<p>Email Tracking</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/emailTracking.create</code></td>
+<td><code>emailTracking.create</code></td>
+<td>Create a new email tracking</td>
+<td><code>client.call('emailTracking.create')</code></td>
+</tr>
+<tr>
+<td><code>/emailTracking.list</code></td>
+<td><code>emailTracking.list</code></td>
+<td>Get a list of all email tracking</td>
+<td><code>client.call('emailTracking.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="closing-days">Closing Days<a class="headerlink" href="#closing-days" title="Permanent link">&para;</a></h2>
+<p>Closing Days</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/closingDays.add</code></td>
+<td><code>closingDays.add</code></td>
+<td>Adds a closing day for the account</td>
+<td><code>client.call('closingDays.add')</code></td>
+</tr>
+<tr>
+<td><code>/closingDays.delete</code></td>
+<td><code>closingDays.delete</code></td>
+<td>Removes a closing day for the account</td>
+<td><code>client.call('closingDays.delete')</code></td>
+</tr>
+<tr>
+<td><code>/closingDays.list</code></td>
+<td><code>closingDays.list</code></td>
+<td>Returns information about closing days of the account</td>
+<td><code>client.call('closingDays.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="day-off-types">Day Off Types<a class="headerlink" href="#day-off-types" title="Permanent link">&para;</a></h2>
+<p>Day Off Types</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/dayOffTypes.create</code></td>
+<td><code>dayOffTypes.create</code></td>
+<td>Create a new day off type</td>
+<td><code>client.call('dayOffTypes.create')</code></td>
+</tr>
+<tr>
+<td><code>/dayOffTypes.delete</code></td>
+<td><code>dayOffTypes.delete</code></td>
+<td>Delete a day off type</td>
+<td><code>client.call('dayOffTypes.delete')</code></td>
+</tr>
+<tr>
+<td><code>/dayOffTypes.list</code></td>
+<td><code>dayOffTypes.list</code></td>
+<td>Returns a list of day off types for the account</td>
+<td><code>client.call('dayOffTypes.list')</code></td>
+</tr>
+<tr>
+<td><code>/dayOffTypes.update</code></td>
+<td><code>dayOffTypes.update</code></td>
+<td>Update a day off type</td>
+<td><code>client.call('dayOffTypes.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="days-off">Days Off<a class="headerlink" href="#days-off" title="Permanent link">&para;</a></h2>
+<p>Days Off</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/daysOff.bulkDelete</code></td>
+<td><code>daysOff.bulkDelete</code></td>
+<td>Deletes a list of days off for the given user</td>
+<td><code>client.call('daysOff.bulkDelete')</code></td>
+</tr>
+<tr>
+<td><code>/daysOff.import</code></td>
+<td><code>daysOff.import</code></td>
+<td>Imports a list of days off for the given user</td>
+<td><code>client.call('daysOff.import')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="contacts">Contacts<a class="headerlink" href="#contacts" title="Permanent link">&para;</a></h2>
+<p>Contacts are physical entities who are added to your CRM database. Contacts might be linked to one or more companies.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/contacts.add</code></td>
+<td><code>contacts.add</code></td>
+<td>Add a new contact</td>
+<td><code>client.call('contacts.add')</code></td>
+</tr>
+<tr>
+<td><code>/contacts.delete</code></td>
+<td><code>contacts.delete</code></td>
+<td>Delete a contact</td>
+<td><code>client.call('contacts.delete')</code></td>
+</tr>
+<tr>
+<td><code>/contacts.info</code></td>
+<td><code>contacts.info</code></td>
+<td>Get details for a single contact</td>
+<td><code>client.call('contacts.info')</code></td>
+</tr>
+<tr>
+<td><code>/contacts.linkToCompany</code></td>
+<td><code>contacts.linkToCompany</code></td>
+<td>Link a contact to a company</td>
+<td><code>client.call('contacts.linkToCompany')</code></td>
+</tr>
+<tr>
+<td><code>/contacts.list</code></td>
+<td><code>contacts.list</code></td>
+<td>Get a list of contacts</td>
+<td><code>client.call('contacts.list')</code></td>
+</tr>
+<tr>
+<td><code>/contacts.tag</code></td>
+<td><code>contacts.tag</code></td>
+<td>Add a new or existing tag to a contact</td>
+<td><code>client.call('contacts.tag')</code></td>
+</tr>
+<tr>
+<td><code>/contacts.unlinkFromCompany</code></td>
+<td><code>contacts.unlinkFromCompany</code></td>
+<td>Unlink a contact from a company</td>
+<td><code>client.call('contacts.unlinkFromCompany')</code></td>
+</tr>
+<tr>
+<td><code>/contacts.untag</code></td>
+<td><code>contacts.untag</code></td>
+<td>Remove a tag from a contact</td>
+<td><code>client.call('contacts.untag')</code></td>
+</tr>
+<tr>
+<td><code>/contacts.update</code></td>
+<td><code>contacts.update</code></td>
+<td>Update a contact</td>
+<td><code>client.call('contacts.update')</code></td>
+</tr>
+<tr>
+<td><code>/contacts.updateCompanyLink</code></td>
+<td><code>contacts.updateCompanyLink</code></td>
+<td>Update contact to company link</td>
+<td><code>client.call('contacts.updateCompanyLink')</code></td>
+</tr>
+<tr>
+<td><code>/contacts.uploadAvatar</code></td>
+<td><code>contacts.uploadAvatar</code></td>
+<td>Update the avatar of a contact</td>
+<td><code>client.call('contacts.uploadAvatar')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="companies">Companies<a class="headerlink" href="#companies" title="Permanent link">&para;</a></h2>
+<p>Companies are legal entities, usually linked to a VAT and/or local business number.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/companies.add</code></td>
+<td><code>companies.add</code></td>
+<td>Add a new company</td>
+<td><code>client.call('companies.add')</code></td>
+</tr>
+<tr>
+<td><code>/companies.delete</code></td>
+<td><code>companies.delete</code></td>
+<td>Delete a company</td>
+<td><code>client.call('companies.delete')</code></td>
+</tr>
+<tr>
+<td><code>/companies.info</code></td>
+<td><code>companies.info</code></td>
+<td>Get details for a single company</td>
+<td><code>client.call('companies.info')</code></td>
+</tr>
+<tr>
+<td><code>/companies.list</code></td>
+<td><code>companies.list</code></td>
+<td>Get a list of companies</td>
+<td><code>client.call('companies.list')</code></td>
+</tr>
+<tr>
+<td><code>/companies.tag</code></td>
+<td><code>companies.tag</code></td>
+<td>Add a new or existing tag to a company</td>
+<td><code>client.call('companies.tag')</code></td>
+</tr>
+<tr>
+<td><code>/companies.untag</code></td>
+<td><code>companies.untag</code></td>
+<td>Remove a tag from a company</td>
+<td><code>client.call('companies.untag')</code></td>
+</tr>
+<tr>
+<td><code>/companies.update</code></td>
+<td><code>companies.update</code></td>
+<td>Update a company</td>
+<td><code>client.call('companies.update')</code></td>
+</tr>
+<tr>
+<td><code>/companies.uploadLogo</code></td>
+<td><code>companies.uploadLogo</code></td>
+<td>Update the logo of a company</td>
+<td><code>client.call('companies.uploadLogo')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="business-types">Business Types<a class="headerlink" href="#business-types" title="Permanent link">&para;</a></h2>
+<p>Each country has a specific set of business types or range of legal entities. You can specify the business type when adding or updating a company.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/businessTypes.list</code></td>
+<td><code>businessTypes.list</code></td>
+<td>Get the names of business types (legal structures) a company can have within a certain country, sorted alphabetically</td>
+<td><code>client.call('businessTypes.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tags">Tags<a class="headerlink" href="#tags" title="Permanent link">&para;</a></h2>
+<p>Tags are used to label contacts or companies, so that they can easily be filtered or grouped into segments.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/tags.list</code></td>
+<td><code>tags.list</code></td>
+<td>Get a list of tags</td>
+<td><code>client.call('tags.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="addresses">Addresses<a class="headerlink" href="#addresses" title="Permanent link">&para;</a></h2>
+<p>We provide a set of data which can be used to build addresses.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/levelTwoAreas.list</code></td>
+<td><code>levelTwoAreas.list</code></td>
+<td>Get a list of level two areas (which correspond to provinces, departments or states in most countries)</td>
+<td><code>client.call('levelTwoAreas.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="deals">Deals<a class="headerlink" href="#deals" title="Permanent link">&para;</a></h2>
+<p>Deals are sale opportunities, which need to be followed up by their responsible user. A deal can move through specific deal phases, and be marked as won or lost.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/deals.create</code></td>
+<td><code>deals.create</code></td>
+<td>Create a new deal for a customer</td>
+<td><code>client.call('deals.create')</code></td>
+</tr>
+<tr>
+<td><code>/deals.delete</code></td>
+<td><code>deals.delete</code></td>
+<td>Delete a deal</td>
+<td><code>client.call('deals.delete')</code></td>
+</tr>
+<tr>
+<td><code>/deals.info</code></td>
+<td><code>deals.info</code></td>
+<td>Get details for a single deal</td>
+<td><code>client.call('deals.info')</code></td>
+</tr>
+<tr>
+<td><code>/deals.list</code></td>
+<td><code>deals.list</code></td>
+<td>Get a list of deals</td>
+<td><code>client.call('deals.list')</code></td>
+</tr>
+<tr>
+<td><code>/deals.lose</code></td>
+<td><code>deals.lose</code></td>
+<td>Mark a deal as lost</td>
+<td><code>client.call('deals.lose')</code></td>
+</tr>
+<tr>
+<td><code>/deals.move</code></td>
+<td><code>deals.move</code></td>
+<td>Move the deal to a different phase</td>
+<td><code>client.call('deals.move')</code></td>
+</tr>
+<tr>
+<td><code>/deals.update</code></td>
+<td><code>deals.update</code></td>
+<td>Update a deal</td>
+<td><code>client.call('deals.update')</code></td>
+</tr>
+<tr>
+<td><code>/deals.win</code></td>
+<td><code>deals.win</code></td>
+<td>Mark a deal as won</td>
+<td><code>client.call('deals.win')</code></td>
+</tr>
+<tr>
+<td><code>/lostReasons.list</code></td>
+<td><code>lostReasons.list</code></td>
+<td>Get a list of lost reasons for deals</td>
+<td><code>client.call('lostReasons.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="deal-pipelines">Deal Pipelines<a class="headerlink" href="#deal-pipelines" title="Permanent link">&para;</a></h2>
+<p>Each deal belongs to a specific pipeline, in which it goes through the different deal phases.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/dealPipelines.create</code></td>
+<td><code>dealPipelines.create</code></td>
+<td>Create a new deal pipeline</td>
+<td><code>client.call('dealPipelines.create')</code></td>
+</tr>
+<tr>
+<td><code>/dealPipelines.delete</code></td>
+<td><code>dealPipelines.delete</code></td>
+<td>Delete a deal pipeline</td>
+<td><code>client.call('dealPipelines.delete')</code></td>
+</tr>
+<tr>
+<td><code>/dealPipelines.duplicate</code></td>
+<td><code>dealPipelines.duplicate</code></td>
+<td>Create a new deal pipeline by duplicating an existing one</td>
+<td><code>client.call('dealPipelines.duplicate')</code></td>
+</tr>
+<tr>
+<td><code>/dealPipelines.list</code></td>
+<td><code>dealPipelines.list</code></td>
+<td>Get a list of all deal pipelines</td>
+<td><code>client.call('dealPipelines.list')</code></td>
+</tr>
+<tr>
+<td><code>/dealPipelines.markAsDefault</code></td>
+<td><code>dealPipelines.markAsDefault</code></td>
+<td>Mark a pipeline as default</td>
+<td><code>client.call('dealPipelines.markAsDefault')</code></td>
+</tr>
+<tr>
+<td><code>/dealPipelines.update</code></td>
+<td><code>dealPipelines.update</code></td>
+<td>Update a single deal pipeline</td>
+<td><code>client.call('dealPipelines.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="deal-phases">Deal Phases<a class="headerlink" href="#deal-phases" title="Permanent link">&para;</a></h2>
+<p>Deal phases are the different phases a deal typically goes through. A deal can be moved to either a next or previous phase. A deal can be marked as won or lost independently from the deal phase.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/dealPhases.create</code></td>
+<td><code>dealPhases.create</code></td>
+<td>Create a new deal phase</td>
+<td><code>client.call('dealPhases.create')</code></td>
+</tr>
+<tr>
+<td><code>/dealPhases.delete</code></td>
+<td><code>dealPhases.delete</code></td>
+<td>Delete a phase</td>
+<td><code>client.call('dealPhases.delete')</code></td>
+</tr>
+<tr>
+<td><code>/dealPhases.duplicate</code></td>
+<td><code>dealPhases.duplicate</code></td>
+<td>Create a new deal phase by duplicating an existing one</td>
+<td><code>client.call('dealPhases.duplicate')</code></td>
+</tr>
+<tr>
+<td><code>/dealPhases.list</code></td>
+<td><code>dealPhases.list</code></td>
+<td>Get a list of all phases a deal can go through, sorted by their order in the flow</td>
+<td><code>client.call('dealPhases.list')</code></td>
+</tr>
+<tr>
+<td><code>/dealPhases.move</code></td>
+<td><code>dealPhases.move</code></td>
+<td>Move a phase to a new position in the pipeline</td>
+<td><code>client.call('dealPhases.move')</code></td>
+</tr>
+<tr>
+<td><code>/dealPhases.update</code></td>
+<td><code>dealPhases.update</code></td>
+<td>Update a deal phase</td>
+<td><code>client.call('dealPhases.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="deal-sources">Deal Sources<a class="headerlink" href="#deal-sources" title="Permanent link">&para;</a></h2>
+<p>Deal sources are used to track the origin of a deal.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/dealSources.list</code></td>
+<td><code>dealSources.list</code></td>
+<td>Get a list of all deal sources, sorted alphabetically (on name)</td>
+<td><code>client.call('dealSources.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="quotations">Quotations<a class="headerlink" href="#quotations" title="Permanent link">&para;</a></h2>
+<p>A quotation is a sales offer for a specific customer. It is always attached to a deal. Quotations can be signed online via Cloudsign.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/quotations.accept</code></td>
+<td><code>quotations.accept</code></td>
+<td>Mark a quotation as accepted</td>
+<td><code>client.call('quotations.accept')</code></td>
+</tr>
+<tr>
+<td><code>/quotations.create</code></td>
+<td><code>quotations.create</code></td>
+<td>Create a quotation</td>
+<td><code>client.call('quotations.create')</code></td>
+</tr>
+<tr>
+<td><code>/quotations.delete</code></td>
+<td><code>quotations.delete</code></td>
+<td>Delete a quotation</td>
+<td><code>client.call('quotations.delete')</code></td>
+</tr>
+<tr>
+<td><code>/quotations.download</code></td>
+<td><code>quotations.download</code></td>
+<td>Download a quotation in a specific format</td>
+<td><code>client.call('quotations.download')</code></td>
+</tr>
+<tr>
+<td><code>/quotations.info</code></td>
+<td><code>quotations.info</code></td>
+<td>Get a quotation</td>
+<td><code>client.call('quotations.info')</code></td>
+</tr>
+<tr>
+<td><code>/quotations.list</code></td>
+<td><code>quotations.list</code></td>
+<td>Get a list of quotations</td>
+<td><code>client.call('quotations.list')</code></td>
+</tr>
+<tr>
+<td><code>/quotations.send</code></td>
+<td><code>quotations.send</code></td>
+<td>Send a quotation</td>
+<td><code>client.call('quotations.send')</code></td>
+</tr>
+<tr>
+<td><code>/quotations.update</code></td>
+<td><code>quotations.update</code></td>
+<td>Update a quotation</td>
+<td><code>client.call('quotations.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="orders">Orders<a class="headerlink" href="#orders" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/orders.info</code></td>
+<td><code>orders.info</code></td>
+<td>Get details for a single order</td>
+<td><code>client.call('orders.info')</code></td>
+</tr>
+<tr>
+<td><code>/orders.list</code></td>
+<td><code>orders.list</code></td>
+<td>Get a list of orders</td>
+<td><code>client.call('orders.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="meetings">Meetings<a class="headerlink" href="#meetings" title="Permanent link">&para;</a></h2>
+<p>Meetings</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/meetings.complete</code></td>
+<td><code>meetings.complete</code></td>
+<td>Mark a meeting as complete</td>
+<td><code>client.call('meetings.complete')</code></td>
+</tr>
+<tr>
+<td><code>/meetings.createReport</code></td>
+<td><code>meetings.createReport</code></td>
+<td>Creates a report for a meeting</td>
+<td><code>client.call('meetings.createReport')</code></td>
+</tr>
+<tr>
+<td><code>/meetings.delete</code></td>
+<td><code>meetings.delete</code></td>
+<td>Deletes a meeting</td>
+<td><code>client.call('meetings.delete')</code></td>
+</tr>
+<tr>
+<td><code>/meetings.info</code></td>
+<td><code>meetings.info</code></td>
+<td>Get information about a meeting</td>
+<td><code>client.call('meetings.info')</code></td>
+</tr>
+<tr>
+<td><code>/meetings.list</code></td>
+<td><code>meetings.list</code></td>
+<td>Get a list of meetings</td>
+<td><code>client.call('meetings.list')</code></td>
+</tr>
+<tr>
+<td><code>/meetings.schedule</code></td>
+<td><code>meetings.schedule</code></td>
+<td>Schedule a meeting</td>
+<td><code>client.call('meetings.schedule')</code></td>
+</tr>
+<tr>
+<td><code>/meetings.update</code></td>
+<td><code>meetings.update</code></td>
+<td>Update a meeting</td>
+<td><code>client.call('meetings.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="calls">Calls<a class="headerlink" href="#calls" title="Permanent link">&para;</a></h2>
+<p>Calls</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/calls.add</code></td>
+<td><code>calls.add</code></td>
+<td>Add a new call</td>
+<td><code>client.call('calls.add')</code></td>
+</tr>
+<tr>
+<td><code>/calls.complete</code></td>
+<td><code>calls.complete</code></td>
+<td>Mark a call as complete</td>
+<td><code>client.call('calls.complete')</code></td>
+</tr>
+<tr>
+<td><code>/calls.info</code></td>
+<td><code>calls.info</code></td>
+<td>Get information about a call</td>
+<td><code>client.call('calls.info')</code></td>
+</tr>
+<tr>
+<td><code>/calls.list</code></td>
+<td><code>calls.list</code></td>
+<td>Get a list of calls</td>
+<td><code>client.call('calls.list')</code></td>
+</tr>
+<tr>
+<td><code>/calls.update</code></td>
+<td><code>calls.update</code></td>
+<td>Update a new call</td>
+<td><code>client.call('calls.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="call-outcomes">Call Outcomes<a class="headerlink" href="#call-outcomes" title="Permanent link">&para;</a></h2>
+<p>Call Outcomes</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/callOutcomes.list</code></td>
+<td><code>callOutcomes.list</code></td>
+<td>Get a list of call outcomes</td>
+<td><code>client.call('callOutcomes.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="calendar-events">Calendar events<a class="headerlink" href="#calendar-events" title="Permanent link">&para;</a></h2>
+<p>Calendar events are scheduled events in your calendar. A calendar event involves a particular activity type: a task, meeting or call.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/events.cancel</code></td>
+<td><code>events.cancel</code></td>
+<td>Cancel a calendar event (for all attendees)</td>
+<td><code>client.call('events.cancel')</code></td>
+</tr>
+<tr>
+<td><code>/events.create</code></td>
+<td><code>events.create</code></td>
+<td>Create a new calendar event</td>
+<td><code>client.call('events.create')</code></td>
+</tr>
+<tr>
+<td><code>/events.info</code></td>
+<td><code>events.info</code></td>
+<td>Get details for a single calendar event</td>
+<td><code>client.call('events.info')</code></td>
+</tr>
+<tr>
+<td><code>/events.list</code></td>
+<td><code>events.list</code></td>
+<td>Get a list of calendar events</td>
+<td><code>client.call('events.list')</code></td>
+</tr>
+<tr>
+<td><code>/events.update</code></td>
+<td><code>events.update</code></td>
+<td>Update a calendar event</td>
+<td><code>client.call('events.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="activity-types">Activity Types<a class="headerlink" href="#activity-types" title="Permanent link">&para;</a></h2>
+<p>Activity types identify the different types of events that take place within your organisation.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/activityTypes.list</code></td>
+<td><code>activityTypes.list</code></td>
+<td>Get a list of all activity types</td>
+<td><code>client.call('activityTypes.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="invoices">Invoices<a class="headerlink" href="#invoices" title="Permanent link">&para;</a></h2>
+<p>Teamleader provides a whole set of endpoints to make it easy to develop</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/invoices.book</code></td>
+<td><code>invoices.book</code></td>
+<td>Book a draft invoice</td>
+<td><code>client.call('invoices.book')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.copy</code></td>
+<td><code>invoices.copy</code></td>
+<td>Creates a new draft invoice based on another invoice</td>
+<td><code>client.call('invoices.copy')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.credit</code></td>
+<td><code>invoices.credit</code></td>
+<td>Credit an invoice completely</td>
+<td><code>client.call('invoices.credit')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.creditPartially</code></td>
+<td><code>invoices.creditPartially</code></td>
+<td>Credit an invoice partially</td>
+<td><code>client.call('invoices.creditPartially')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.delete</code></td>
+<td><code>invoices.delete</code></td>
+<td>Delete an existing invoice. Only possible for draft invoices or the last booked invoice</td>
+<td><code>client.call('invoices.delete')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.download</code></td>
+<td><code>invoices.download</code></td>
+<td>Download an invoice in a specific format</td>
+<td><code>client.call('invoices.download')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.draft</code></td>
+<td><code>invoices.draft</code></td>
+<td>Draft a new invoice</td>
+<td><code>client.call('invoices.draft')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.info</code></td>
+<td><code>invoices.info</code></td>
+<td>Get details for a single invoice</td>
+<td><code>client.call('invoices.info')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.list</code></td>
+<td><code>invoices.list</code></td>
+<td>Get a list of invoices</td>
+<td><code>client.call('invoices.list')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.registerPayment</code></td>
+<td><code>invoices.registerPayment</code></td>
+<td>Register a payment for an invoice</td>
+<td><code>client.call('invoices.registerPayment')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.removePayments</code></td>
+<td><code>invoices.removePayments</code></td>
+<td>Marks an invoice as unpaid and removes all linked payments. This will also trigger a re-rendering of the invoice PDF</td>
+<td><code>client.call('invoices.removePayments')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.send</code></td>
+<td><code>invoices.send</code></td>
+<td>Send an invoice via e-mail</td>
+<td><code>client.call('invoices.send')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.sendViaPeppol</code></td>
+<td><code>invoices.sendViaPeppol</code></td>
+<td>Send an invoice via the Peppol network</td>
+<td><code>client.call('invoices.sendViaPeppol')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.update</code></td>
+<td><code>invoices.update</code></td>
+<td>Update a draft invoice. Booked invoices cannot be updated</td>
+<td><code>client.call('invoices.update')</code></td>
+</tr>
+<tr>
+<td><code>/invoices.updateBooked</code></td>
+<td><code>invoices.updateBooked</code></td>
+<td>Update a booked invoice. Only available when editing booked invoices is allowed through the settings</td>
+<td><code>client.call('invoices.updateBooked')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="credit-notes">Credit Notes<a class="headerlink" href="#credit-notes" title="Permanent link">&para;</a></h2>
+<p>Credit notes are created when certain products or services are not delivered</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/creditNotes.download</code></td>
+<td><code>creditNotes.download</code></td>
+<td>Download a credit note in a specific format</td>
+<td><code>client.call('creditNotes.download')</code></td>
+</tr>
+<tr>
+<td><code>/creditNotes.info</code></td>
+<td><code>creditNotes.info</code></td>
+<td>Get details for a single credit note</td>
+<td><code>client.call('creditNotes.info')</code></td>
+</tr>
+<tr>
+<td><code>/creditNotes.list</code></td>
+<td><code>creditNotes.list</code></td>
+<td>List credit notes</td>
+<td><code>client.call('creditNotes.list')</code></td>
+</tr>
+<tr>
+<td><code>/creditNotes.sendViaPeppol</code></td>
+<td><code>creditNotes.sendViaPeppol</code></td>
+<td>Send a credit note via the Peppol network</td>
+<td><code>client.call('creditNotes.sendViaPeppol')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="subscriptions">Subscriptions<a class="headerlink" href="#subscriptions" title="Permanent link">&para;</a></h2>
+<p>Subscriptions</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/subscriptions.create</code></td>
+<td><code>subscriptions.create</code></td>
+<td>Create a new subscription</td>
+<td><code>client.call('subscriptions.create')</code></td>
+</tr>
+<tr>
+<td><code>/subscriptions.deactivate</code></td>
+<td><code>subscriptions.deactivate</code></td>
+<td>Deactivate a subscription</td>
+<td><code>client.call('subscriptions.deactivate')</code></td>
+</tr>
+<tr>
+<td><code>/subscriptions.info</code></td>
+<td><code>subscriptions.info</code></td>
+<td>Get details for a single subscription</td>
+<td><code>client.call('subscriptions.info')</code></td>
+</tr>
+<tr>
+<td><code>/subscriptions.list</code></td>
+<td><code>subscriptions.list</code></td>
+<td>Get a list of subscriptions</td>
+<td><code>client.call('subscriptions.list')</code></td>
+</tr>
+<tr>
+<td><code>/subscriptions.update</code></td>
+<td><code>subscriptions.update</code></td>
+<td>Update a subscription</td>
+<td><code>client.call('subscriptions.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tax-rates">Tax Rates<a class="headerlink" href="#tax-rates" title="Permanent link">&para;</a></h2>
+<p>Tax rates provide an overview of different taxation rates used to bill</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/taxRates.list</code></td>
+<td><code>taxRates.list</code></td>
+<td>Get a list of available tax rates</td>
+<td><code>client.call('taxRates.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="payment-terms">Payment Terms<a class="headerlink" href="#payment-terms" title="Permanent link">&para;</a></h2>
+<p>Payment terms are the conditions under which an invoice need to be paid.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/paymentTerms.list</code></td>
+<td><code>paymentTerms.list</code></td>
+<td>Get a list of available payment terms</td>
+<td><code>client.call('paymentTerms.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="withholding-tax-rates">Withholding Tax Rates<a class="headerlink" href="#withholding-tax-rates" title="Permanent link">&para;</a></h2>
+<p>Withholding tax rates provide an overview of different taxation rates used</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/withholdingTaxRates.list</code></td>
+<td><code>withholdingTaxRates.list</code></td>
+<td>Get a list of available withholding tax rates</td>
+<td><code>client.call('withholdingTaxRates.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="commercial-discounts">Commercial Discounts<a class="headerlink" href="#commercial-discounts" title="Permanent link">&para;</a></h2>
+<p>Commercial Discounts</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/commercialDiscounts.list</code></td>
+<td><code>commercialDiscounts.list</code></td>
+<td>Get a list of commercial discounts</td>
+<td><code>client.call('commercialDiscounts.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="payment-methods">Payment Methods<a class="headerlink" href="#payment-methods" title="Permanent link">&para;</a></h2>
+<p>Payment Methods</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/paymentMethods.list</code></td>
+<td><code>paymentMethods.list</code></td>
+<td>Get a list of payment methods</td>
+<td><code>client.call('paymentMethods.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="expenses">Expenses<a class="headerlink" href="#expenses" title="Permanent link">&para;</a></h2>
+<p>Expenses</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/expenses.list</code></td>
+<td><code>expenses.list</code></td>
+<td>Get a list of all expenses</td>
+<td><code>client.call('expenses.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="bookkeeping-submissions">Bookkeeping Submissions<a class="headerlink" href="#bookkeeping-submissions" title="Permanent link">&para;</a></h2>
+<p>Bookkeeping Submissions</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/bookkeepingSubmissions.list</code></td>
+<td><code>bookkeepingSubmissions.list</code></td>
+<td>List all bookkeeping submissions belonging to a specific financial document id and type</td>
+<td><code>client.call('bookkeepingSubmissions.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="incoming-credit-notes">Incoming Credit Notes<a class="headerlink" href="#incoming-credit-notes" title="Permanent link">&para;</a></h2>
+<p>Incoming credit notes are credit notes received from your suppliers. They</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/incomingCreditNotes.add</code></td>
+<td><code>incomingCreditNotes.add</code></td>
+<td>Adds an incoming credit note</td>
+<td><code>client.call('incomingCreditNotes.add')</code></td>
+</tr>
+<tr>
+<td><code>/incomingCreditNotes.approve</code></td>
+<td><code>incomingCreditNotes.approve</code></td>
+<td>Approve an incoming credit note</td>
+<td><code>client.call('incomingCreditNotes.approve')</code></td>
+</tr>
+<tr>
+<td><code>/incomingCreditNotes.delete</code></td>
+<td><code>incomingCreditNotes.delete</code></td>
+<td>Deletes an incoming credit note</td>
+<td><code>client.call('incomingCreditNotes.delete')</code></td>
+</tr>
+<tr>
+<td><code>/incomingCreditNotes.info</code></td>
+<td><code>incomingCreditNotes.info</code></td>
+<td>Get details for a single incoming credit note</td>
+<td><code>client.call('incomingCreditNotes.info')</code></td>
+</tr>
+<tr>
+<td><code>/incomingCreditNotes.listPayments</code></td>
+<td><code>incomingCreditNotes.listPayments</code></td>
+<td>List payments for an incoming credit note</td>
+<td><code>client.call('incomingCreditNotes.listPayments')</code></td>
+</tr>
+<tr>
+<td><code>/incomingCreditNotes.markAsPendingReview</code></td>
+<td><code>incomingCreditNotes.markAsPendingReview</code></td>
+<td>Mark an incoming credit note as pending review</td>
+<td><code>client.call('incomingCreditNotes.markAsPendingReview')</code></td>
+</tr>
+<tr>
+<td><code>/incomingCreditNotes.refuse</code></td>
+<td><code>incomingCreditNotes.refuse</code></td>
+<td>Refuse an incoming credit note</td>
+<td><code>client.call('incomingCreditNotes.refuse')</code></td>
+</tr>
+<tr>
+<td><code>/incomingCreditNotes.registerPayment</code></td>
+<td><code>incomingCreditNotes.registerPayment</code></td>
+<td>Register a payment for an incoming credit note</td>
+<td><code>client.call('incomingCreditNotes.registerPayment')</code></td>
+</tr>
+<tr>
+<td><code>/incomingCreditNotes.removePayment</code></td>
+<td><code>incomingCreditNotes.removePayment</code></td>
+<td>Remove a payment from an incoming credit note</td>
+<td><code>client.call('incomingCreditNotes.removePayment')</code></td>
+</tr>
+<tr>
+<td><code>/incomingCreditNotes.sendToBookkeeping</code></td>
+<td><code>incomingCreditNotes.sendToBookkeeping</code></td>
+<td>Send an incoming credit note to bookkeeping</td>
+<td><code>client.call('incomingCreditNotes.sendToBookkeeping')</code></td>
+</tr>
+<tr>
+<td><code>/incomingCreditNotes.update</code></td>
+<td><code>incomingCreditNotes.update</code></td>
+<td>Updates an incoming credit note</td>
+<td><code>client.call('incomingCreditNotes.update')</code></td>
+</tr>
+<tr>
+<td><code>/incomingCreditNotes.updatePayment</code></td>
+<td><code>incomingCreditNotes.updatePayment</code></td>
+<td>Update a payment for an incoming credit note</td>
+<td><code>client.call('incomingCreditNotes.updatePayment')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="incoming-invoices">Incoming Invoices<a class="headerlink" href="#incoming-invoices" title="Permanent link">&para;</a></h2>
+<p>Incoming invoices are invoices received from your suppliers. They can be</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/incomingInvoices.add</code></td>
+<td><code>incomingInvoices.add</code></td>
+<td>Adds an incoming invoice</td>
+<td><code>client.call('incomingInvoices.add')</code></td>
+</tr>
+<tr>
+<td><code>/incomingInvoices.approve</code></td>
+<td><code>incomingInvoices.approve</code></td>
+<td>Approve an incoming invoice</td>
+<td><code>client.call('incomingInvoices.approve')</code></td>
+</tr>
+<tr>
+<td><code>/incomingInvoices.delete</code></td>
+<td><code>incomingInvoices.delete</code></td>
+<td>Deletes an incoming invoice</td>
+<td><code>client.call('incomingInvoices.delete')</code></td>
+</tr>
+<tr>
+<td><code>/incomingInvoices.info</code></td>
+<td><code>incomingInvoices.info</code></td>
+<td>Get details for a single incoming invoice</td>
+<td><code>client.call('incomingInvoices.info')</code></td>
+</tr>
+<tr>
+<td><code>/incomingInvoices.listPayments</code></td>
+<td><code>incomingInvoices.listPayments</code></td>
+<td>List payments for an incoming invoice</td>
+<td><code>client.call('incomingInvoices.listPayments')</code></td>
+</tr>
+<tr>
+<td><code>/incomingInvoices.markAsPendingReview</code></td>
+<td><code>incomingInvoices.markAsPendingReview</code></td>
+<td>Mark an incoming invoice as pending review</td>
+<td><code>client.call('incomingInvoices.markAsPendingReview')</code></td>
+</tr>
+<tr>
+<td><code>/incomingInvoices.refuse</code></td>
+<td><code>incomingInvoices.refuse</code></td>
+<td>Refuse an incoming invoice</td>
+<td><code>client.call('incomingInvoices.refuse')</code></td>
+</tr>
+<tr>
+<td><code>/incomingInvoices.registerPayment</code></td>
+<td><code>incomingInvoices.registerPayment</code></td>
+<td>Register a payment for an incoming invoice</td>
+<td><code>client.call('incomingInvoices.registerPayment')</code></td>
+</tr>
+<tr>
+<td><code>/incomingInvoices.removePayment</code></td>
+<td><code>incomingInvoices.removePayment</code></td>
+<td>Remove a payment from an incoming invoice</td>
+<td><code>client.call('incomingInvoices.removePayment')</code></td>
+</tr>
+<tr>
+<td><code>/incomingInvoices.sendToBookkeeping</code></td>
+<td><code>incomingInvoices.sendToBookkeeping</code></td>
+<td>Send an incoming invoice to bookkeeping</td>
+<td><code>client.call('incomingInvoices.sendToBookkeeping')</code></td>
+</tr>
+<tr>
+<td><code>/incomingInvoices.update</code></td>
+<td><code>incomingInvoices.update</code></td>
+<td>Updates an incoming invoice</td>
+<td><code>client.call('incomingInvoices.update')</code></td>
+</tr>
+<tr>
+<td><code>/incomingInvoices.updatePayment</code></td>
+<td><code>incomingInvoices.updatePayment</code></td>
+<td>Update a payment for an incoming invoice</td>
+<td><code>client.call('incomingInvoices.updatePayment')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="receipts">Receipts<a class="headerlink" href="#receipts" title="Permanent link">&para;</a></h2>
+<p>Receipts are expenses for which you have a receipt, but no invoice. They can</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/receipts.add</code></td>
+<td><code>receipts.add</code></td>
+<td>Adds a receipt</td>
+<td><code>client.call('receipts.add')</code></td>
+</tr>
+<tr>
+<td><code>/receipts.approve</code></td>
+<td><code>receipts.approve</code></td>
+<td>Approve a receipt</td>
+<td><code>client.call('receipts.approve')</code></td>
+</tr>
+<tr>
+<td><code>/receipts.delete</code></td>
+<td><code>receipts.delete</code></td>
+<td>Deletes a receipt</td>
+<td><code>client.call('receipts.delete')</code></td>
+</tr>
+<tr>
+<td><code>/receipts.info</code></td>
+<td><code>receipts.info</code></td>
+<td>Get details for a single receipt</td>
+<td><code>client.call('receipts.info')</code></td>
+</tr>
+<tr>
+<td><code>/receipts.listPayments</code></td>
+<td><code>receipts.listPayments</code></td>
+<td>List payments for a(n incoming) receipt</td>
+<td><code>client.call('receipts.listPayments')</code></td>
+</tr>
+<tr>
+<td><code>/receipts.markAsPendingReview</code></td>
+<td><code>receipts.markAsPendingReview</code></td>
+<td>Mark a receipts as pending review</td>
+<td><code>client.call('receipts.markAsPendingReview')</code></td>
+</tr>
+<tr>
+<td><code>/receipts.refuse</code></td>
+<td><code>receipts.refuse</code></td>
+<td>Refuse a receipts</td>
+<td><code>client.call('receipts.refuse')</code></td>
+</tr>
+<tr>
+<td><code>/receipts.registerPayment</code></td>
+<td><code>receipts.registerPayment</code></td>
+<td>Register a payment for a(n incoming) receipt</td>
+<td><code>client.call('receipts.registerPayment')</code></td>
+</tr>
+<tr>
+<td><code>/receipts.removePayment</code></td>
+<td><code>receipts.removePayment</code></td>
+<td>Remove a payment from a receipt</td>
+<td><code>client.call('receipts.removePayment')</code></td>
+</tr>
+<tr>
+<td><code>/receipts.sendToBookkeeping</code></td>
+<td><code>receipts.sendToBookkeeping</code></td>
+<td>Send a receipt to bookkeeping for processing</td>
+<td><code>client.call('receipts.sendToBookkeeping')</code></td>
+</tr>
+<tr>
+<td><code>/receipts.update</code></td>
+<td><code>receipts.update</code></td>
+<td>Updates a receipt</td>
+<td><code>client.call('receipts.update')</code></td>
+</tr>
+<tr>
+<td><code>/receipts.updatePayment</code></td>
+<td><code>receipts.updatePayment</code></td>
+<td>Update a payment for a(n incoming) receipt</td>
+<td><code>client.call('receipts.updatePayment')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="product-categories">Product Categories<a class="headerlink" href="#product-categories" title="Permanent link">&para;</a></h2>
+<p>Product categories are used to group specific products. They can be linked</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/productCategories.list</code></td>
+<td><code>productCategories.list</code></td>
+<td>Get a list of product categories</td>
+<td><code>client.call('productCategories.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="products">Products<a class="headerlink" href="#products" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/products.add</code></td>
+<td><code>products.add</code></td>
+<td>Add a new product</td>
+<td><code>client.call('products.add')</code></td>
+</tr>
+<tr>
+<td><code>/products.delete</code></td>
+<td><code>products.delete</code></td>
+<td>Delete a product</td>
+<td><code>client.call('products.delete')</code></td>
+</tr>
+<tr>
+<td><code>/products.info</code></td>
+<td><code>products.info</code></td>
+<td>Get details for a single product</td>
+<td><code>client.call('products.info')</code></td>
+</tr>
+<tr>
+<td><code>/products.list</code></td>
+<td><code>products.list</code></td>
+<td>Get a list of products</td>
+<td><code>client.call('products.list')</code></td>
+</tr>
+<tr>
+<td><code>/products.update</code></td>
+<td><code>products.update</code></td>
+<td>Update a product</td>
+<td><code>client.call('products.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="units-of-measure">Units of Measure<a class="headerlink" href="#units-of-measure" title="Permanent link">&para;</a></h2>
+<p>Units of Measure</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/unitsOfMeasure.list</code></td>
+<td><code>unitsOfMeasure.list</code></td>
+<td>Get a list of units of measure</td>
+<td><code>client.call('unitsOfMeasure.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="price-lists">Price Lists<a class="headerlink" href="#price-lists" title="Permanent link">&para;</a></h2>
+<p>Price Lists</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/priceLists.list</code></td>
+<td><code>priceLists.list</code></td>
+<td>Get a list of priceLists</td>
+<td><code>client.call('priceLists.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="legacy-projects">Legacy Projects<a class="headerlink" href="#legacy-projects" title="Permanent link">&para;</a></h2>
+<p>Projects allow users to work together as a team on a single project. They</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/projects.addParticipant</code></td>
+<td><code>projects.addParticipant</code></td>
+<td>Add a participant to a project</td>
+<td><code>client.call('projects.addParticipant')</code></td>
+</tr>
+<tr>
+<td><code>/projects.close</code></td>
+<td><code>projects.close</code></td>
+<td>Closes a project, all its phases, and all tasks within each phase (but not meetings)</td>
+<td><code>client.call('projects.close')</code></td>
+</tr>
+<tr>
+<td><code>/projects.create</code></td>
+<td><code>projects.create</code></td>
+<td>Create a new project</td>
+<td><code>client.call('projects.create')</code></td>
+</tr>
+<tr>
+<td><code>/projects.delete</code></td>
+<td><code>projects.delete</code></td>
+<td>Delete a project</td>
+<td><code>client.call('projects.delete')</code></td>
+</tr>
+<tr>
+<td><code>/projects.info</code></td>
+<td><code>projects.info</code></td>
+<td>Get details for a single project</td>
+<td><code>client.call('projects.info')</code></td>
+</tr>
+<tr>
+<td><code>/projects.list</code></td>
+<td><code>projects.list</code></td>
+<td>Get a list of projects</td>
+<td><code>client.call('projects.list')</code></td>
+</tr>
+<tr>
+<td><code>/projects.reopen</code></td>
+<td><code>projects.reopen</code></td>
+<td>Reopens a project, changing its status to "active"</td>
+<td><code>client.call('projects.reopen')</code></td>
+</tr>
+<tr>
+<td><code>/projects.update</code></td>
+<td><code>projects.update</code></td>
+<td>Update a project</td>
+<td><code>client.call('projects.update')</code></td>
+</tr>
+<tr>
+<td><code>/projects.updateParticipant</code></td>
+<td><code>projects.updateParticipant</code></td>
+<td>Update a participant's role for a project</td>
+<td><code>client.call('projects.updateParticipant')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="legacy-milestones">Legacy Milestones<a class="headerlink" href="#legacy-milestones" title="Permanent link">&para;</a></h2>
+<p>Every projects consists of one or more milestones which are limited in time</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/milestones.close</code></td>
+<td><code>milestones.close</code></td>
+<td>Close a milestone. All open tasks will be closed, open meetings will remain open. Closing the last open milestone will also close the project</td>
+<td><code>client.call('milestones.close')</code></td>
+</tr>
+<tr>
+<td><code>/milestones.create</code></td>
+<td><code>milestones.create</code></td>
+<td>Create a new milestone</td>
+<td><code>client.call('milestones.create')</code></td>
+</tr>
+<tr>
+<td><code>/milestones.delete</code></td>
+<td><code>milestones.delete</code></td>
+<td>Delete a milestone</td>
+<td><code>client.call('milestones.delete')</code></td>
+</tr>
+<tr>
+<td><code>/milestones.info</code></td>
+<td><code>milestones.info</code></td>
+<td>Get details for a single milestone</td>
+<td><code>client.call('milestones.info')</code></td>
+</tr>
+<tr>
+<td><code>/milestones.list</code></td>
+<td><code>milestones.list</code></td>
+<td>Get a list of project milestones</td>
+<td><code>client.call('milestones.list')</code></td>
+</tr>
+<tr>
+<td><code>/milestones.open</code></td>
+<td><code>milestones.open</code></td>
+<td>(Re)open a milestone. If the milestone's project is closed, the project will be reopened</td>
+<td><code>client.call('milestones.open')</code></td>
+</tr>
+<tr>
+<td><code>/milestones.update</code></td>
+<td><code>milestones.update</code></td>
+<td>Update a milestone</td>
+<td><code>client.call('milestones.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="projects">Projects<a class="headerlink" href="#projects" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>_This is the documentation of the new projects module. See the **Legacy</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/projects-v2/projects.addCustomer</code></td>
+<td><code>projects.addCustomer</code></td>
+<td>Add a customer to the project. Doesn't fail if the customer was already added</td>
+<td><code>client.call('projects-v2/projects.addCustomer')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.addDeal</code></td>
+<td><code>projects.addDeal</code></td>
+<td>Add a deal to the project. Doesn't fail if the deal was already added</td>
+<td><code>client.call('projects-v2/projects.addDeal')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.addOwner</code></td>
+<td><code>projects.addOwner</code></td>
+<td>Add a user as owner. Doesn't fail if the user was already added</td>
+<td><code>client.call('projects-v2/projects.addOwner')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.addQuotation</code></td>
+<td><code>projects.addQuotation</code></td>
+<td>Add a quotation to the project. Doesn't fail if the quotation was already added</td>
+<td><code>client.call('projects-v2/projects.addQuotation')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.assign</code></td>
+<td><code>projects.assign</code></td>
+<td>Assign a user or a team to a project</td>
+<td><code>client.call('projects-v2/projects.assign')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.close</code></td>
+<td><code>projects.close</code></td>
+<td>Mark a project as closed</td>
+<td><code>client.call('projects-v2/projects.close')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.create</code></td>
+<td><code>projects.create</code></td>
+<td>Create a new project. Only <code>title</code> is required. All the other fields are optional</td>
+<td><code>client.call('projects-v2/projects.create')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.delete</code></td>
+<td><code>projects.delete</code></td>
+<td>Delete a project</td>
+<td><code>client.call('projects-v2/projects.delete')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.duplicate</code></td>
+<td><code>projects.duplicate</code></td>
+<td>Duplicate a project</td>
+<td><code>client.call('projects-v2/projects.duplicate')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.info</code></td>
+<td><code>projects.info</code></td>
+<td>Returns all the information of a single project</td>
+<td><code>client.call('projects-v2/projects.info')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.list</code></td>
+<td><code>projects.list</code></td>
+<td>Lists all projects that match the optional filters provided</td>
+<td><code>client.call('projects-v2/projects.list')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.removeCustomer</code></td>
+<td><code>projects.removeCustomer</code></td>
+<td>Remove a customer from the project. Doesn't fail if the customer was not added</td>
+<td><code>client.call('projects-v2/projects.removeCustomer')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.removeDeal</code></td>
+<td><code>projects.removeDeal</code></td>
+<td>Remove a deal from the project. Doesn't fail if the deal was already removed</td>
+<td><code>client.call('projects-v2/projects.removeDeal')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.removeOwner</code></td>
+<td><code>projects.removeOwner</code></td>
+<td>Remove a user as owner. Doesn't fail if the user wasn't linked</td>
+<td><code>client.call('projects-v2/projects.removeOwner')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.removeQuotation</code></td>
+<td><code>projects.removeQuotation</code></td>
+<td>Remove a quotation from the project. Doesn't fail if the quotation was already removed</td>
+<td><code>client.call('projects-v2/projects.removeQuotation')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.reopen</code></td>
+<td><code>projects.reopen</code></td>
+<td>Reopen a closed project</td>
+<td><code>client.call('projects-v2/projects.reopen')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.unassign</code></td>
+<td><code>projects.unassign</code></td>
+<td>Unassign a user or a team from a project</td>
+<td><code>client.call('projects-v2/projects.unassign')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projects.update</code></td>
+<td><code>projects.update</code></td>
+<td>Update a project. All attributes except for <code>id</code> are optional. Providing <code>null</code> will clear that value from the project (for properties that are nullable)</td>
+<td><code>client.call('projects-v2/projects.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="external-parties">External parties<a class="headerlink" href="#external-parties" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>An external party is a contact or company that is added to a project with an optional function and/or sub function.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/projects-v2/externalParties.addToProject</code></td>
+<td><code>externalParties.addToProject</code></td>
+<td>Add an external party to a project</td>
+<td><code>client.call('projects-v2/externalParties.addToProject')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/externalParties.delete</code></td>
+<td><code>externalParties.delete</code></td>
+<td>Delete an external party</td>
+<td><code>client.call('projects-v2/externalParties.delete')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/externalParties.update</code></td>
+<td><code>externalParties.update</code></td>
+<td>Update an external party</td>
+<td><code>client.call('projects-v2/externalParties.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="project-lines">Project lines<a class="headerlink" href="#project-lines" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>A project line can be a group, a task, or a material.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/projects-v2/projectLines.addToGroup</code></td>
+<td><code>projectLines.addToGroup</code></td>
+<td>Add an existing task or material to a group</td>
+<td><code>client.call('projects-v2/projectLines.addToGroup')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projectLines.list</code></td>
+<td><code>projectLines.list</code></td>
+<td>All line types (tasks, materials, groups) can be side-loaded</td>
+<td><code>client.call('projects-v2/projectLines.list')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projectLines.removeFromGroup</code></td>
+<td><code>projectLines.removeFromGroup</code></td>
+<td>Remove a task or material from the group it is currently in</td>
+<td><code>client.call('projects-v2/projectLines.removeFromGroup')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="groups">Groups<a class="headerlink" href="#groups" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/projects-v2/projectGroups.assign</code></td>
+<td><code>projectGroups.assign</code></td>
+<td>Assign a user or a team to a group</td>
+<td><code>client.call('projects-v2/projectGroups.assign')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projectGroups.create</code></td>
+<td><code>projectGroups.create</code></td>
+<td>Create a group. All properties except for <code>title</code> and <code>project_id</code> are optional</td>
+<td><code>client.call('projects-v2/projectGroups.create')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projectGroups.delete</code></td>
+<td><code>projectGroups.delete</code></td>
+<td>Delete a group</td>
+<td><code>client.call('projects-v2/projectGroups.delete')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projectGroups.duplicate</code></td>
+<td><code>projectGroups.duplicate</code></td>
+<td>Duplicate a group and its entities, without any time trackings</td>
+<td><code>client.call('projects-v2/projectGroups.duplicate')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projectGroups.info</code></td>
+<td><code>projectGroups.info</code></td>
+<td>Returns all the information for one group</td>
+<td><code>client.call('projects-v2/projectGroups.info')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projectGroups.list</code></td>
+<td><code>projectGroups.list</code></td>
+<td>Lists all the groups that match the optional filters provided</td>
+<td><code>client.call('projects-v2/projectGroups.list')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projectGroups.unassign</code></td>
+<td><code>projectGroups.unassign</code></td>
+<td>Unassign a user or a team from a group</td>
+<td><code>client.call('projects-v2/projectGroups.unassign')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/projectGroups.update</code></td>
+<td><code>projectGroups.update</code></td>
+<td>Update a group. All attributes except for <code>id</code> are optional. Providing <code>null</code> will clear that value from the project (for properties that are nullable)</td>
+<td><code>client.call('projects-v2/projectGroups.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>_These endpoints are for (new) project tasks. For documentation on</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/projects-v2/tasks.assign</code></td>
+<td><code>tasks.assign</code></td>
+<td>Assign a user or a team to a task</td>
+<td><code>client.call('projects-v2/tasks.assign')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/tasks.create</code></td>
+<td><code>tasks.create</code></td>
+<td>Create a task. All properties except for <code>title</code> and <code>project_id</code> are optional</td>
+<td><code>client.call('projects-v2/tasks.create')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/tasks.delete</code></td>
+<td><code>tasks.delete</code></td>
+<td>Delete a task</td>
+<td><code>client.call('projects-v2/tasks.delete')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/tasks.duplicate</code></td>
+<td><code>tasks.duplicate</code></td>
+<td>Duplicate a task, without its time trackings</td>
+<td><code>client.call('projects-v2/tasks.duplicate')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/tasks.info</code></td>
+<td><code>tasks.info</code></td>
+<td>Returns all the information for one task</td>
+<td><code>client.call('projects-v2/tasks.info')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/tasks.list</code></td>
+<td><code>tasks.list</code></td>
+<td>Lists all the tasks that match the optional filters provided</td>
+<td><code>client.call('projects-v2/tasks.list')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/tasks.unassign</code></td>
+<td><code>tasks.unassign</code></td>
+<td>Unassign a user or a team from a task</td>
+<td><code>client.call('projects-v2/tasks.unassign')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/tasks.update</code></td>
+<td><code>tasks.update</code></td>
+<td>Update a task. All attributes except for <code>id</code> are optional. Providing <code>null</code> will clear that value from the project (for properties that are nullable)</td>
+<td><code>client.call('projects-v2/tasks.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="materials">Materials<a class="headerlink" href="#materials" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/projects-v2/materials.assign</code></td>
+<td><code>materials.assign</code></td>
+<td>Assign a user or a team to a material</td>
+<td><code>client.call('projects-v2/materials.assign')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/materials.create</code></td>
+<td><code>materials.create</code></td>
+<td>Create a material. All properties except for <code>title</code> and <code>project_id</code> are optional</td>
+<td><code>client.call('projects-v2/materials.create')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/materials.delete</code></td>
+<td><code>materials.delete</code></td>
+<td>Delete a material</td>
+<td><code>client.call('projects-v2/materials.delete')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/materials.duplicate</code></td>
+<td><code>materials.duplicate</code></td>
+<td>Duplicate a material</td>
+<td><code>client.call('projects-v2/materials.duplicate')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/materials.info</code></td>
+<td><code>materials.info</code></td>
+<td>Returns all the information for one material</td>
+<td><code>client.call('projects-v2/materials.info')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/materials.list</code></td>
+<td><code>materials.list</code></td>
+<td>Lists all the materials that match the optional filters provided</td>
+<td><code>client.call('projects-v2/materials.list')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/materials.unassign</code></td>
+<td><code>materials.unassign</code></td>
+<td>Unassign a user or a team from a material</td>
+<td><code>client.call('projects-v2/materials.unassign')</code></td>
+</tr>
+<tr>
+<td><code>/projects-v2/materials.update</code></td>
+<td><code>materials.update</code></td>
+<td>Update a material. All attributes except for <code>id</code> are optional. Providing <code>null</code> will clear that value from the project (for properties that are nullable)</td>
+<td><code>client.call('projects-v2/materials.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tasks_1">Tasks<a class="headerlink" href="#tasks_1" title="Permanent link">&para;</a></h2>
+<p>Tasks</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/tasks.complete</code></td>
+<td><code>tasks.complete</code></td>
+<td>Mark a task as complete</td>
+<td><code>client.call('tasks.complete')</code></td>
+</tr>
+<tr>
+<td><code>/tasks.create</code></td>
+<td><code>tasks.create</code></td>
+<td>Create a new task</td>
+<td><code>client.call('tasks.create')</code></td>
+</tr>
+<tr>
+<td><code>/tasks.delete</code></td>
+<td><code>tasks.delete</code></td>
+<td>Delete a task</td>
+<td><code>client.call('tasks.delete')</code></td>
+</tr>
+<tr>
+<td><code>/tasks.info</code></td>
+<td><code>tasks.info</code></td>
+<td>Get information about a task</td>
+<td><code>client.call('tasks.info')</code></td>
+</tr>
+<tr>
+<td><code>/tasks.list</code></td>
+<td><code>tasks.list</code></td>
+<td>Get a list of tasks</td>
+<td><code>client.call('tasks.list')</code></td>
+</tr>
+<tr>
+<td><code>/tasks.reopen</code></td>
+<td><code>tasks.reopen</code></td>
+<td>Reopen a task that had been marked as complete</td>
+<td><code>client.call('tasks.reopen')</code></td>
+</tr>
+<tr>
+<td><code>/tasks.schedule</code></td>
+<td><code>tasks.schedule</code></td>
+<td>Schedule a task in your calendar</td>
+<td><code>client.call('tasks.schedule')</code></td>
+</tr>
+<tr>
+<td><code>/tasks.update</code></td>
+<td><code>tasks.update</code></td>
+<td>Update a task</td>
+<td><code>client.call('tasks.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="time-tracking">Time Tracking<a class="headerlink" href="#time-tracking" title="Permanent link">&para;</a></h2>
+<p>Time tracking allows users to record time spent on tasks or projects and the</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/timeTracking.add</code></td>
+<td><code>timeTracking.add</code></td>
+<td>Add tracked time</td>
+<td><code>client.call('timeTracking.add')</code></td>
+</tr>
+<tr>
+<td><code>/timeTracking.delete</code></td>
+<td><code>timeTracking.delete</code></td>
+<td>Delete a tracked time</td>
+<td><code>client.call('timeTracking.delete')</code></td>
+</tr>
+<tr>
+<td><code>/timeTracking.info</code></td>
+<td><code>timeTracking.info</code></td>
+<td>Get information about tracked time</td>
+<td><code>client.call('timeTracking.info')</code></td>
+</tr>
+<tr>
+<td><code>/timeTracking.list</code></td>
+<td><code>timeTracking.list</code></td>
+<td>Get a list of tracked time</td>
+<td><code>client.call('timeTracking.list')</code></td>
+</tr>
+<tr>
+<td><code>/timeTracking.resume</code></td>
+<td><code>timeTracking.resume</code></td>
+<td>Start a new timer based on previously tracked time</td>
+<td><code>client.call('timeTracking.resume')</code></td>
+</tr>
+<tr>
+<td><code>/timeTracking.update</code></td>
+<td><code>timeTracking.update</code></td>
+<td>Update tracked time</td>
+<td><code>client.call('timeTracking.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="timers">Timers<a class="headerlink" href="#timers" title="Permanent link">&para;</a></h2>
+<p>Timers are an easy way to track time. You can start, stop or resume a timer</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/timers.current</code></td>
+<td><code>timers.current</code></td>
+<td>Get the current running timer</td>
+<td><code>client.call('timers.current')</code></td>
+</tr>
+<tr>
+<td><code>/timers.start</code></td>
+<td><code>timers.start</code></td>
+<td>Start a new timer</td>
+<td><code>client.call('timers.start')</code></td>
+</tr>
+<tr>
+<td><code>/timers.stop</code></td>
+<td><code>timers.stop</code></td>
+<td>Stop the current timer. This will add a new time tracking in the background</td>
+<td><code>client.call('timers.stop')</code></td>
+</tr>
+<tr>
+<td><code>/timers.update</code></td>
+<td><code>timers.update</code></td>
+<td>Update the current timer. Only possible if there is a timer running</td>
+<td><code>client.call('timers.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tickets">Tickets<a class="headerlink" href="#tickets" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/tickets.addInternalMessage</code></td>
+<td><code>tickets.addInternalMessage</code></td>
+<td>Adds an internal message to a ticket</td>
+<td><code>client.call('tickets.addInternalMessage')</code></td>
+</tr>
+<tr>
+<td><code>/tickets.addReply</code></td>
+<td><code>tickets.addReply</code></td>
+<td>Adds a message to a ticket</td>
+<td><code>client.call('tickets.addReply')</code></td>
+</tr>
+<tr>
+<td><code>/tickets.create</code></td>
+<td><code>tickets.create</code></td>
+<td>Create a ticket</td>
+<td><code>client.call('tickets.create')</code></td>
+</tr>
+<tr>
+<td><code>/tickets.getMessage</code></td>
+<td><code>tickets.getMessage</code></td>
+<td>Gets the ticket message</td>
+<td><code>client.call('tickets.getMessage')</code></td>
+</tr>
+<tr>
+<td><code>/tickets.importMessage</code></td>
+<td><code>tickets.importMessage</code></td>
+<td>Imports an existing message to a ticket</td>
+<td><code>client.call('tickets.importMessage')</code></td>
+</tr>
+<tr>
+<td><code>/tickets.info</code></td>
+<td><code>tickets.info</code></td>
+<td>Get details for a single ticket</td>
+<td><code>client.call('tickets.info')</code></td>
+</tr>
+<tr>
+<td><code>/tickets.list</code></td>
+<td><code>tickets.list</code></td>
+<td>Get a list of tickets</td>
+<td><code>client.call('tickets.list')</code></td>
+</tr>
+<tr>
+<td><code>/tickets.listMessages</code></td>
+<td><code>tickets.listMessages</code></td>
+<td>Lists messages of a ticket</td>
+<td><code>client.call('tickets.listMessages')</code></td>
+</tr>
+<tr>
+<td><code>/tickets.update</code></td>
+<td><code>tickets.update</code></td>
+<td>Update a ticket</td>
+<td><code>client.call('tickets.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="ticket-status">Ticket Status<a class="headerlink" href="#ticket-status" title="Permanent link">&para;</a></h2>
+<p>Ticket Status</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/ticketStatus.list</code></td>
+<td><code>ticketStatus.list</code></td>
+<td>Get a list of ticket statuses</td>
+<td><code>client.call('ticketStatus.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="files">Files<a class="headerlink" href="#files" title="Permanent link">&para;</a></h2>
+<p>Files</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/files.delete</code></td>
+<td><code>files.delete</code></td>
+<td>Delete a file</td>
+<td><code>client.call('files.delete')</code></td>
+</tr>
+<tr>
+<td><code>/files.download</code></td>
+<td><code>files.download</code></td>
+<td>Request the download link for a file</td>
+<td><code>client.call('files.download')</code></td>
+</tr>
+<tr>
+<td><code>/files.info</code></td>
+<td><code>files.info</code></td>
+<td>Get details for a single file</td>
+<td><code>client.call('files.info')</code></td>
+</tr>
+<tr>
+<td><code>/files.list</code></td>
+<td><code>files.list</code></td>
+<td>Get a list of files</td>
+<td><code>client.call('files.list')</code></td>
+</tr>
+<tr>
+<td><code>/files.upload</code></td>
+<td><code>files.upload</code></td>
+<td>Request the upload link for a file</td>
+<td><code>client.call('files.upload')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="mail-templates">Mail Templates<a class="headerlink" href="#mail-templates" title="Permanent link">&para;</a></h2>
+<p>Mail Templates</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/mailTemplates.list</code></td>
+<td><code>mailTemplates.list</code></td>
+<td>Get a list of all mail templates</td>
+<td><code>client.call('mailTemplates.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="migrating">Migrating<a class="headerlink" href="#migrating" title="Permanent link">&para;</a></h2>
+<p>⚠️ WARNING! These endpoints are not guaranteed to stay backwards compatible.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/migrate.activityType</code></td>
+<td><code>migrate.activityType</code></td>
+<td>Translates <code>meeting</code>, <code>call</code> and <code>task</code> into their respective activity type UUID</td>
+<td><code>client.call('migrate.activityType')</code></td>
+</tr>
+<tr>
+<td><code>/migrate.id</code></td>
+<td><code>migrate.id</code></td>
+<td>Translates an ID from the deprecated API into a new UUID</td>
+<td><code>client.call('migrate.id')</code></td>
+</tr>
+<tr>
+<td><code>/migrate.taxRate</code></td>
+<td><code>migrate.taxRate</code></td>
+<td>Translates tax rates from the deprecated API into a new UUID tax rate</td>
+<td><code>client.call('migrate.taxRate')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="webhooks">Webhooks<a class="headerlink" href="#webhooks" title="Permanent link">&para;</a></h2>
+<p>Webhooks</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/webhooks.list</code></td>
+<td><code>webhooks.list</code></td>
+<td>List registered webhooks ordered by URL</td>
+<td><code>client.call('webhooks.list')</code></td>
+</tr>
+<tr>
+<td><code>/webhooks.register</code></td>
+<td><code>webhooks.register</code></td>
+<td>Register a new webhook</td>
+<td><code>client.call('webhooks.register')</code></td>
+</tr>
+<tr>
+<td><code>/webhooks.unregister</code></td>
+<td><code>webhooks.unregister</code></td>
+<td>Unregister a webhook</td>
+<td><code>client.call('webhooks.unregister')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="cloud-platforms">Cloud Platforms<a class="headerlink" href="#cloud-platforms" title="Permanent link">&para;</a></h2>
+<p>Cloud Platforms</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/cloudPlatforms.url</code></td>
+<td><code>cloudPlatforms.url</code></td>
+<td>Fetch cloudPlatform url for type and id</td>
+<td><code>client.call('cloudPlatforms.url')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="accounts">Accounts<a class="headerlink" href="#accounts" title="Permanent link">&para;</a></h2>
+<p>Accounts</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/accounts.projects-v2-status</code></td>
+<td><code>accounts.projects-v2-status</code></td>
+<td>Fetch which version of Projects the account is using</td>
+<td><code>client.call('accounts.projects-v2-status')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="plannable-items">Plannable items<a class="headerlink" href="#plannable-items" title="Permanent link">&para;</a></h2>
+<p>Plannable items</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/plannableItems.info</code></td>
+<td><code>plannableItems.info</code></td>
+<td>Returns the info for a single plannable item, either by ID or source if the ID is unknown</td>
+<td><code>client.call('plannableItems.info')</code></td>
+</tr>
+<tr>
+<td><code>/plannableItems.list</code></td>
+<td><code>plannableItems.list</code></td>
+<td>Lists all plannable items that match the optional filters provided</td>
+<td><code>client.call('plannableItems.list')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="reservations">Reservations<a class="headerlink" href="#reservations" title="Permanent link">&para;</a></h2>
+<p>Reservations</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/reservations.create</code></td>
+<td><code>reservations.create</code></td>
+<td>Create a new reservation</td>
+<td><code>client.call('reservations.create')</code></td>
+</tr>
+<tr>
+<td><code>/reservations.delete</code></td>
+<td><code>reservations.delete</code></td>
+<td>Delete a reservation</td>
+<td><code>client.call('reservations.delete')</code></td>
+</tr>
+<tr>
+<td><code>/reservations.list</code></td>
+<td><code>reservations.list</code></td>
+<td>Lists all reservations that match the optional filters provided</td>
+<td><code>client.call('reservations.list')</code></td>
+</tr>
+<tr>
+<td><code>/reservations.update</code></td>
+<td><code>reservations.update</code></td>
+<td>Update an existing reservation</td>
+<td><code>client.call('reservations.update')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="user-availability">User availability<a class="headerlink" href="#user-availability" title="Permanent link">&para;</a></h2>
+<p>User availability</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Summary</th>
+<th>Description</th>
+<th><code>client.call()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/userAvailability.daily</code></td>
+<td><code>userAvailability.daily</code></td>
+<td>Returns the daily availability for all users</td>
+<td><code>client.call('userAvailability.daily')</code></td>
+</tr>
+<tr>
+<td><code>/userAvailability.total</code></td>
+<td><code>userAvailability.total</code></td>
+<td>Returns the total availability for all users</td>
+<td><code>client.call('userAvailability.total')</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "toc.integrate", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -40,14 +40,12 @@ class Page(Generic[M]):
     page_size:
         Number of items requested per page.
 
-    After construction :class:`CrudResource` sets two private attributes used
-    for forward-pagination:
-
-    ``_resource``
-        Back-reference to the :class:`CrudResource` that produced this page.
-    ``_filters``
-        The extra ``**filters`` kwargs that were passed to
-        :meth:`CrudResource.list`, forwarded verbatim when fetching the next page.
+    Notes
+    -----
+    After construction :class:`CrudResource` injects two private attributes used
+    for forward-pagination.  ``_resource`` is a back-reference to the
+    :class:`CrudResource` that produced this page; ``_filters`` are the extra
+    ``**filters`` kwargs forwarded verbatim when fetching the next page.
     """
 
     data: list[M]
@@ -178,11 +176,38 @@ class CrudResource(Generic[M]):
             "page": {"size": page_size, "number": page},
             **filters,
         }
+
+        # Always request the pagination include so the API returns meta.matches
+        # for endpoints that support it (companies, deals, invoices, …).
+        # Merge with any caller-supplied includes without mutating the original
+        # ``filters`` dict — that dict is stored verbatim on ``page._filters``
+        # so that ``Page.next()`` replays the user-visible includes on every page.
+        user_includes = body.get("includes", "") or ""
+        body["includes"] = ",".join(filter(None, [user_includes, "pagination"]))
+
         resp = self._client._post(self._path("list"), body)
         items = [self._deserialise(d) for d in resp["data"]]
+
+        # meta.matches is returned only when the endpoint supports
+        # ``includes=pagination`` (contacts.list does not; companies and deals do).
+        # Fall back to a length-based heuristic when it is absent:
+        #   • fewer items than page_size  → definitely last page
+        #   • exactly page_size items     → assume at least one more page exists
+        # The heuristic causes one extra empty request at the end of iteration,
+        # which ``iterate()`` handles gracefully.
+        meta: dict[str, Any] = resp.get("meta") or {}
+        if "matches" in meta:
+            total_count = int(meta["matches"])
+        elif len(items) < page_size:
+            # Partial page — we know the exact total
+            total_count = (page - 1) * page_size + len(items)
+        else:
+            # Full page — signal "might have more" with one item over the threshold
+            total_count = page * page_size + 1
+
         page_obj = Page(
             data=items,
-            total_count=resp["meta"]["matches"],
+            total_count=total_count,
             current_page=page,
             page_size=page_size,
         )

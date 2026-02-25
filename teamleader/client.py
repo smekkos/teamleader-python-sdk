@@ -31,6 +31,7 @@ from typing import Any
 
 import requests
 
+from teamleader._generated.endpoints import ENDPOINTS
 from teamleader.auth import OAuth2Handler
 from teamleader.constants import BASE_URL, DEFAULT_TIMEOUT
 from teamleader.exceptions import (
@@ -81,6 +82,82 @@ class TeamleaderClient:
         self.deals: DealsResource = DealsResource(self)
         self.invoices: InvoicesResource = InvoicesResource(self)
         self.quotations: QuotationsResource = QuotationsResource(self)
+
+    # ------------------------------------------------------------------
+    # Public generic caller
+    # ------------------------------------------------------------------
+
+    def call(self, operation_id: str, **kwargs: Any) -> dict[str, Any]:
+        """Call any Teamleader API endpoint by its operation ID.
+
+        Uses the generated :data:`~teamleader._generated.endpoints.ENDPOINTS`
+        registry to look up the request path and validate required parameters
+        **before** the HTTP request is sent.
+
+        Parameters
+        ----------
+        operation_id:
+            The Teamleader API operation ID exactly as it appears in
+            :data:`~teamleader._generated.endpoints.ENDPOINTS`, e.g.
+            ``"tickets.list"``, ``"activityTypes.list"``, ``"users.me"``.
+        **kwargs:
+            Request body parameters forwarded directly to the API as JSON.
+            Required parameters for the chosen endpoint are validated; a
+            ``ValueError`` is raised if any are missing.
+
+        Returns
+        -------
+        dict[str, Any]:
+            Raw response dictionary from the API.  Unlike curated resource
+            methods (e.g. :meth:`~teamleader.resources.contacts.ContactsResource.get`),
+            this does **not** deserialise into a typed model — the caller
+            receives the JSON body as-is.
+
+        Raises
+        ------
+        ValueError
+            If *operation_id* is not in ``ENDPOINTS``, or if one or more
+            required parameters are absent from *kwargs*.
+        TeamleaderError
+            Any HTTP-level error raised by the underlying transport layer
+            (same exceptions as the curated resources).
+
+        Examples
+        --------
+        List activity types (no required params):
+
+        .. code-block:: python
+
+            result = client.call("activityTypes.list", page={"size": 20, "number": 1})
+            for item in result["data"]:
+                print(item["name"])
+
+        Fetch a single department (``id`` is required):
+
+        .. code-block:: python
+
+            dept = client.call("departments.info", id="67c576e7-7e6f-465d-b6ab-a864f6e5e95b")
+            print(dept["data"]["name"])
+        """
+        endpoint = ENDPOINTS.get(operation_id)
+        if endpoint is None:
+            raise ValueError(
+                f"Unknown operation_id {operation_id!r}. "
+                f"See teamleader._generated.endpoints.ENDPOINTS.keys() for the "
+                f"full list of {len(ENDPOINTS)} available operation IDs."
+            )
+
+        missing = [p for p in endpoint.required_params if p not in kwargs]
+        if missing:
+            raise ValueError(
+                f"Missing required parameter(s) for {operation_id!r}: "
+                f"{missing}. "
+                f"Required: {list(endpoint.required_params)}, "
+                f"optional: {list(endpoint.optional_params)}."
+            )
+
+        # endpoint.path is "/contacts.list"; _post expects "contacts.list"
+        return self._post(endpoint.path.lstrip("/"), kwargs if kwargs else None)
 
     # ------------------------------------------------------------------
     # Private helpers

@@ -1,0 +1,86 @@
+site_name: teamleader-sdk
+site_description: Python SDK for the Teamleader Focus API
+site_url: ""
+repo_url: https://github.com/yourorg/teamleader-python-sdk
+repo_name: yourorg/teamleader-python-sdk
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - toc.integrate
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+
+nav:
+  - Home: index.md
+  - Guides:
+    - guides/django.md
+    - guides/non-django.md
+    - guides/resources.md
+    - guides/error-handling.md
+  - API Reference:
+    - api-reference/models.md
+    - api-reference/resources.md
+    - api-reference/auth.md
+    - api-reference/client.md
+    - api-reference/exceptions.md
+    - api-reference/generated-endpoints.md
+  - Codegen: codegen.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_source: true
+            show_bases: true
+            show_inheritance_diagram: false
+            show_root_heading: true
+            show_root_full_path: false
+            members_order: source
+            separate_signature: true
+            show_signature_annotations: true
+            unwrap_annotated: true
+            filters:
+              - "!^_"        # hide private members …
+              - "^__init__"  # … but keep __init__
+              - "^from_api"  # keep from_api classmethods
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+hooks:
+  - codegen/generate_docs_endpoints.py

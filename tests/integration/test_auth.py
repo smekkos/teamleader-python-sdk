@@ -33,12 +33,21 @@ from teamleader.constants import BASE_URL
 
 
 def _persist_tokens_to_env(token: Token) -> None:
-    """Write updated token values back to the project .env file.
+    """Write updated token values back to both os.environ and the project .env file.
 
-    Called after a successful token rotation so the next test session
-    starts with valid credentials rather than a stale refresh token.
-    No-op if python-dotenv is not installed or no .env file is found.
+    Updating os.environ immediately ensures that any fixture in the SAME pytest
+    session that calls os.environ.get("TEAMLEADER_INTEGRATION_*") picks up the
+    new token pair — important because test_refresh_token_rotation runs before
+    test_expired_token_is_transparently_refreshed and rotates the refresh token.
+
+    Writing to .env ensures the NEXT session also starts with valid credentials.
+    No-op for the file write if python-dotenv is not installed or no .env found.
     """
+    # Update the live process environment immediately.
+    os.environ["TEAMLEADER_INTEGRATION_ACCESS_TOKEN"] = token.access_token
+    os.environ["TEAMLEADER_INTEGRATION_REFRESH_TOKEN"] = token.refresh_token
+    os.environ["TEAMLEADER_INTEGRATION_EXPIRES_AT"] = token.expires_at.isoformat()
+
     try:
         from dotenv import find_dotenv, set_key  # type: ignore[import]
     except ImportError:

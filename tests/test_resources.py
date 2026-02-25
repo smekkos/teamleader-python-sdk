@@ -602,3 +602,412 @@ class TestCrudResourceIterate:
         result = list(resource.iterate())
 
         assert result == []
+
+
+# ===========================================================================
+# Phase 9 — Extra methods on concrete resource classes
+# ===========================================================================
+# Each test creates a fresh MagicMock client and instantiates the real
+# resource class so the actual implementation code is exercised.
+# ---------------------------------------------------------------------------
+
+from teamleader.models.common import Money, TypeAndId
+from teamleader.resources.contacts import ContactsResource
+from teamleader.resources.companies import CompaniesResource
+from teamleader.resources.deals import DealsResource
+from teamleader.resources.invoices import InvoicesResource
+from teamleader.resources.quotations import QuotationsResource
+
+
+# ---------------------------------------------------------------------------
+# ContactsResource
+# ---------------------------------------------------------------------------
+
+
+class TestContactsResourceTag:
+    def test_tag_posts_to_correct_endpoint(self) -> None:
+        client = MagicMock()
+        res = ContactsResource(client)
+        res.tag("contact-1", ["vip", "expo"])
+        client._post.assert_called_once_with(
+            "contacts.tag", {"id": "contact-1", "tags": ["vip", "expo"]}
+        )
+
+    def test_tag_returns_none(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {}
+        assert ContactsResource(client).tag("c", ["t"]) is None
+
+    def test_untag_posts_to_correct_endpoint(self) -> None:
+        client = MagicMock()
+        ContactsResource(client).untag("contact-1", ["vip"])
+        client._post.assert_called_once_with(
+            "contacts.untag", {"id": "contact-1", "tags": ["vip"]}
+        )
+
+    def test_untag_returns_none(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {}
+        assert ContactsResource(client).untag("c", ["t"]) is None
+
+
+class TestContactsResourceLinking:
+    def test_link_to_company_minimal(self) -> None:
+        client = MagicMock()
+        ContactsResource(client).link_to_company("c-1", "co-1")
+        client._post.assert_called_once_with(
+            "contacts.linkToCompany", {"id": "c-1", "company_id": "co-1"}
+        )
+
+    def test_link_to_company_with_position(self) -> None:
+        client = MagicMock()
+        ContactsResource(client).link_to_company("c-1", "co-1", position="CEO")
+        body = client._post.call_args[0][1]
+        assert body["position"] == "CEO"
+        assert "decision_maker" not in body
+
+    def test_link_to_company_with_decision_maker(self) -> None:
+        client = MagicMock()
+        ContactsResource(client).link_to_company("c-1", "co-1", decision_maker=True)
+        body = client._post.call_args[0][1]
+        assert body["decision_maker"] is True
+        assert "position" not in body
+
+    def test_link_to_company_all_params(self) -> None:
+        client = MagicMock()
+        ContactsResource(client).link_to_company(
+            "c-1", "co-1", position="CEO", decision_maker=True
+        )
+        body = client._post.call_args[0][1]
+        assert body == {"id": "c-1", "company_id": "co-1", "position": "CEO", "decision_maker": True}
+
+    def test_unlink_from_company(self) -> None:
+        client = MagicMock()
+        ContactsResource(client).unlink_from_company("c-1", "co-1")
+        client._post.assert_called_once_with(
+            "contacts.unlinkFromCompany", {"id": "c-1", "company_id": "co-1"}
+        )
+
+    def test_unlink_returns_none(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {}
+        assert ContactsResource(client).unlink_from_company("c", "co") is None
+
+
+# ---------------------------------------------------------------------------
+# CompaniesResource
+# ---------------------------------------------------------------------------
+
+
+class TestCompaniesResourceTag:
+    def test_tag_posts_to_correct_endpoint(self) -> None:
+        client = MagicMock()
+        CompaniesResource(client).tag("co-1", ["customer"])
+        client._post.assert_called_once_with(
+            "companies.tag", {"id": "co-1", "tags": ["customer"]}
+        )
+
+    def test_untag_posts_to_correct_endpoint(self) -> None:
+        client = MagicMock()
+        CompaniesResource(client).untag("co-1", ["customer"])
+        client._post.assert_called_once_with(
+            "companies.untag", {"id": "co-1", "tags": ["customer"]}
+        )
+
+    def test_tag_returns_none(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {}
+        assert CompaniesResource(client).tag("co", ["t"]) is None
+
+    def test_untag_returns_none(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {}
+        assert CompaniesResource(client).untag("co", ["t"]) is None
+
+
+# ---------------------------------------------------------------------------
+# DealsResource
+# ---------------------------------------------------------------------------
+
+
+class TestDealsResourceTransitions:
+    def test_move_to_phase(self) -> None:
+        client = MagicMock()
+        DealsResource(client).move_to_phase("deal-1", "phase-1")
+        client._post.assert_called_once_with(
+            "deals.move", {"id": "deal-1", "phase_id": "phase-1"}
+        )
+
+    def test_win(self) -> None:
+        client = MagicMock()
+        DealsResource(client).win("deal-1")
+        client._post.assert_called_once_with("deals.win", {"id": "deal-1"})
+
+    def test_lose_minimal(self) -> None:
+        client = MagicMock()
+        DealsResource(client).lose("deal-1")
+        client._post.assert_called_once_with("deals.lose", {"id": "deal-1"})
+
+    def test_lose_with_reason_id(self) -> None:
+        client = MagicMock()
+        DealsResource(client).lose("deal-1", reason_id="r-1")
+        body = client._post.call_args[0][1]
+        assert body["reason_id"] == "r-1"
+        assert "extra_info" not in body
+
+    def test_lose_with_extra_info(self) -> None:
+        client = MagicMock()
+        DealsResource(client).lose("deal-1", extra_info="Too expensive")
+        body = client._post.call_args[0][1]
+        assert body["extra_info"] == "Too expensive"
+        assert "reason_id" not in body
+
+    def test_lose_with_all_params(self) -> None:
+        client = MagicMock()
+        DealsResource(client).lose("deal-1", reason_id="r-1", extra_info="info")
+        body = client._post.call_args[0][1]
+        assert body == {"id": "deal-1", "reason_id": "r-1", "extra_info": "info"}
+
+    def test_transitions_return_none(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {}
+        res = DealsResource(client)
+        assert res.move_to_phase("d", "p") is None
+        assert res.win("d") is None
+        assert res.lose("d") is None
+
+
+class TestDealsResourceReferenceData:
+    def test_list_phases_no_filter(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {"data": [{"id": "p-1", "name": "New"}]}
+        result = DealsResource(client).list_phases()
+        client._post.assert_called_once_with("dealPhases.list", {})
+        assert result == [{"id": "p-1", "name": "New"}]
+
+    def test_list_phases_with_pipeline_id(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {"data": []}
+        DealsResource(client).list_phases(deal_pipeline_id="pipe-1")
+        body = client._post.call_args[0][1]
+        assert body == {"filter": {"deal_pipeline_id": "pipe-1"}}
+
+    def test_list_phases_with_ids(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {"data": []}
+        DealsResource(client).list_phases(ids=["p-1", "p-2"])
+        body = client._post.call_args[0][1]
+        assert body == {"filter": {"ids": ["p-1", "p-2"]}}
+
+    def test_list_phases_returns_data_list(self) -> None:
+        client = MagicMock()
+        phases = [{"id": "p-1"}, {"id": "p-2"}]
+        client._post.return_value = {"data": phases}
+        assert DealsResource(client).list_phases() == phases
+
+    def test_list_sources_no_filter(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {"data": [{"id": "s-1", "name": "Referral"}]}
+        result = DealsResource(client).list_sources()
+        client._post.assert_called_once_with("dealSources.list", {})
+        assert result == [{"id": "s-1", "name": "Referral"}]
+
+    def test_list_sources_with_ids(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {"data": []}
+        DealsResource(client).list_sources(ids=["s-1"])
+        body = client._post.call_args[0][1]
+        assert body == {"filter": {"ids": ["s-1"]}}
+
+    def test_list_sources_returns_data_list(self) -> None:
+        client = MagicMock()
+        sources = [{"id": "s-1"}, {"id": "s-2"}]
+        client._post.return_value = {"data": sources}
+        assert DealsResource(client).list_sources() == sources
+
+    def test_reference_endpoints_not_prefixed(self) -> None:
+        """list_phases / list_sources call dealPhases/dealSources endpoints,
+        not contacts.list or deals.list."""
+        client = MagicMock()
+        client._post.return_value = {"data": []}
+        res = DealsResource(client)
+        res.list_phases()
+        assert client._post.call_args[0][0] == "dealPhases.list"
+        res.list_sources()
+        assert client._post.call_args[0][0] == "dealSources.list"
+
+
+# ---------------------------------------------------------------------------
+# InvoicesResource
+# ---------------------------------------------------------------------------
+
+
+class TestInvoicesResourceActions:
+    def test_book_posts_correct_body(self) -> None:
+        client = MagicMock()
+        InvoicesResource(client).book("inv-1", "2020-03-01")
+        client._post.assert_called_once_with(
+            "invoices.book", {"id": "inv-1", "on": "2020-03-01"}
+        )
+
+    def test_book_returns_none(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {}
+        assert InvoicesResource(client).book("inv-1", "2020-03-01") is None
+
+    def test_credit_minimal_returns_type_and_id(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {"data": {"type": "creditNote", "id": "cn-1"}}
+        result = InvoicesResource(client).credit("inv-1")
+        client._post.assert_called_once_with("invoices.credit", {"id": "inv-1"})
+        assert isinstance(result, TypeAndId)
+        assert result.type == "creditNote"
+        assert result.id == "cn-1"
+
+    def test_credit_with_date(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {"data": {"type": "creditNote", "id": "cn-1"}}
+        InvoicesResource(client).credit("inv-1", credit_note_date="2020-01-01")
+        body = client._post.call_args[0][1]
+        assert body["credit_note_date"] == "2020-01-01"
+
+    def test_register_payment_minimal(self) -> None:
+        client = MagicMock()
+        money = Money(amount=100.0, currency="EUR")
+        InvoicesResource(client).register_payment("inv-1", money, "2020-03-01T00:00:00+00:00")
+        body = client._post.call_args[0][1]
+        assert body["id"] == "inv-1"
+        assert body["payment"] == {"amount": 100.0, "currency": "EUR"}
+        assert body["paid_at"] == "2020-03-01T00:00:00+00:00"
+        assert "payment_method_id" not in body
+
+    def test_register_payment_with_method_id(self) -> None:
+        client = MagicMock()
+        money = Money(amount=50.0, currency="EUR")
+        InvoicesResource(client).register_payment(
+            "inv-1", money, "2020-03-01T00:00:00+00:00", payment_method_id="pm-1"
+        )
+        body = client._post.call_args[0][1]
+        assert body["payment_method_id"] == "pm-1"
+
+    def test_register_payment_returns_none(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {}
+        assert InvoicesResource(client).register_payment(
+            "inv-1", Money(100.0, "EUR"), "2020-01-01T00:00:00+00:00"
+        ) is None
+
+    def test_send_minimal(self) -> None:
+        client = MagicMock()
+        InvoicesResource(client).send("inv-1", "Invoice", "Please pay")
+        body = client._post.call_args[0][1]
+        assert body["id"] == "inv-1"
+        assert body["content"] == {"subject": "Invoice", "body": "Please pay"}
+        assert "recipients" not in body
+
+    def test_send_with_mail_template(self) -> None:
+        client = MagicMock()
+        InvoicesResource(client).send("inv-1", "Invoice", "Body", mail_template_id="tmpl-1")
+        body = client._post.call_args[0][1]
+        assert body["content"]["mail_template_id"] == "tmpl-1"
+
+    def test_send_with_recipients(self) -> None:
+        client = MagicMock()
+        recipients = {"to": [{"email": "a@b.com"}]}
+        InvoicesResource(client).send("inv-1", "Invoice", "Body", recipients=recipients)
+        body = client._post.call_args[0][1]
+        assert body["recipients"] == recipients
+
+    def test_send_returns_none(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {}
+        assert InvoicesResource(client).send("inv-1", "S", "B") is None
+
+    def test_download_default_format(self) -> None:
+        client = MagicMock()
+        download_data = {"location": "https://cdn.example.com/file.pdf", "expires": "2025-01-01T00:00:00+00:00"}
+        client._post.return_value = {"data": download_data}
+        result = InvoicesResource(client).download("inv-1")
+        client._post.assert_called_once_with(
+            "invoices.download", {"id": "inv-1", "format": "pdf"}
+        )
+        assert result == download_data
+
+    def test_download_custom_format(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {"data": {"location": "https://cdn.example.com/file.xml", "expires": "2025-01-01T00:00:00+00:00"}}
+        InvoicesResource(client).download("inv-1", format="ubl/e-fff")
+        body = client._post.call_args[0][1]
+        assert body["format"] == "ubl/e-fff"
+
+    def test_download_returns_location_dict(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {"data": {"location": "https://example.com/x", "expires": "2025-01-01"}}
+        result = InvoicesResource(client).download("inv-1")
+        assert "location" in result
+        assert "expires" in result
+
+
+# ---------------------------------------------------------------------------
+# QuotationsResource
+# ---------------------------------------------------------------------------
+
+
+class TestQuotationsResourceActions:
+    def _recipients(self) -> dict:
+        return {"to": [{"email_address": "client@example.com"}]}
+
+    def test_send_posts_to_correct_endpoint(self) -> None:
+        client = MagicMock()
+        QuotationsResource(client).send(
+            ["quot-1"], self._recipients(), "Subject", "Body text", "en"
+        )
+        path = client._post.call_args[0][0]
+        assert path == "quotations.send"
+
+    def test_send_body_contains_required_fields(self) -> None:
+        client = MagicMock()
+        QuotationsResource(client).send(
+            ["quot-1"], self._recipients(), "Subject", "Body text", "en"
+        )
+        body = client._post.call_args[0][1]
+        assert body["quotations"] == ["quot-1"]
+        assert body["recipients"] == self._recipients()
+        assert body["subject"] == "Subject"
+        assert body["content"] == "Body text"
+        assert body["language"] == "en"
+        assert "from" not in body
+
+    def test_send_with_from_(self) -> None:
+        client = MagicMock()
+        from_ = {"sender": {"type": "user", "id": "user-1"}, "email_address": "me@acme.com"}
+        QuotationsResource(client).send(
+            ["quot-1"], self._recipients(), "S", "B", "nl", from_=from_
+        )
+        body = client._post.call_args[0][1]
+        assert body["from"] == from_
+
+    def test_send_multiple_quotation_ids(self) -> None:
+        client = MagicMock()
+        QuotationsResource(client).send(
+            ["quot-1", "quot-2"], self._recipients(), "S", "B", "en"
+        )
+        body = client._post.call_args[0][1]
+        assert body["quotations"] == ["quot-1", "quot-2"]
+
+    def test_send_returns_none(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {}
+        assert QuotationsResource(client).send(
+            ["q"], self._recipients(), "S", "B", "en"
+        ) is None
+
+    def test_accept_posts_correct_body(self) -> None:
+        client = MagicMock()
+        QuotationsResource(client).accept("quot-1")
+        client._post.assert_called_once_with("quotations.accept", {"id": "quot-1"})
+
+    def test_accept_returns_none(self) -> None:
+        client = MagicMock()
+        client._post.return_value = {}
+        assert QuotationsResource(client).accept("quot-1") is None

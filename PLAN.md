@@ -77,22 +77,22 @@ teamleader-sdk/
 │   │   └── endpoints.py        ✅ 290 endpoints (v1.112.0)
 │   │
 │   ├── models/
-│   │   ├── __init__.py         🔲 Phase 8
-│   │   ├── common.py           🔲 Address, Email, Telephone, Money, CustomField, WebLink
-│   │   ├── contact.py          🔲 Contact (inherits _ContactBase)
-│   │   ├── company.py          🔲 Company
-│   │   ├── deal.py             🔲 Deal
-│   │   ├── invoice.py          🔲 Invoice
-│   │   └── quotation.py        🔲 Quotation
+│   │   ├── __init__.py         ✅ Phase 8
+│   │   ├── common.py           ✅ TypeAndId, Address, AddressEntry, Email, Telephone, Money, CustomField, PaymentTerm, WebLink
+│   │   ├── contact.py          ✅ Contact — 24 fields, 4 computed properties
+│   │   ├── company.py          ✅ Company — 22 fields, 3 computed properties
+│   │   ├── deal.py             ✅ Deal — 19 fields, 5 computed properties
+│   │   ├── invoice.py          ✅ Invoice — 19 fields, 5 computed properties incl. is_overdue
+│   │   └── quotation.py        ✅ Quotation — 13 fields, 5 computed properties
 │   │
 │   ├── resources/
 │   │   ├── __init__.py         ✅ Phase 7/9
 │   │   ├── base.py             ✅ Page[M], CrudResource[M] — Phase 7
-│   │   ├── contacts.py         🔲 Phase 9
-│   │   ├── companies.py        🔲 Phase 9
-│   │   ├── deals.py            🔲 Phase 9
-│   │   ├── invoices.py         🔲 Phase 9
-│   │   └── quotations.py       🔲 Phase 9
+│   │   ├── contacts.py         ✅ Phase 9 — tag, untag, link_to_company, unlink_from_company
+│   │   ├── companies.py        ✅ Phase 9 — tag, untag
+│   │   ├── deals.py            ✅ Phase 9 — move_to_phase, win, lose, list_phases, list_sources
+│   │   ├── invoices.py         ✅ Phase 9 — book, credit, register_payment, send, download
+│   │   └── quotations.py       ✅ Phase 9 — send, accept
 │   │
 │   └── django/
 │       ├── __init__.py         ✅ import guard + get_client() — wired to DatabaseTokenBackend (Phase 5)
@@ -112,8 +112,8 @@ teamleader-sdk/
 │   ├── test_auth.py            ✅ 32 unit tests — Token, MemoryTokenBackend, OAuth2Handler (Phase 4)
 │   ├── test_django_token_store.py  ✅ 12 unit tests — DatabaseTokenBackend ORM (Phase 5)
 │   ├── test_teamleader_setup.py    ✅ 9 unit tests — _CallbackHandler HTTP (Phase 5)
-│   ├── test_resources.py       ✅ 43 unit tests — Page, CrudResource (Phase 7)
-│   ├── test_models.py          🔲 Phase 11
+│   ├── test_resources.py       ✅ 93 unit tests — Page, CrudResource, all extra resource methods (Phase 7/9)
+│   ├── test_models.py          ✅ 111 unit tests — all curated models (Phase 8)
 │   └── integration/
 │       ├── conftest.py         ✅ auto-skip without credentials; load_dotenv(); shared integration_backend/handler/client fixtures (Phase 5/6)
 │       ├── test_auth.py        ✅ 3 integration tests — get_valid_token, refresh rotation + .env auto-persist, /users.me API check (Phase 4/5)
@@ -351,27 +351,58 @@ Each exception carries: `message`, `status_code`, `raw_response`.
 
 ---
 
-### 🔲 Phase 8 — Curated Models
+### ✅ Phase 8 — Curated Models
 
-**`teamleader/models/common.py`** — `Users`, `Custom Fields`, `Contacts`, `Companies`, `Business Types`, `Tags`, `Addresses`,`Quotations`, `Orders`
-Each has `from_api(dict) -> Self` and `to_dict() -> dict`.
+**`teamleader/models/common.py`** — new sub-models: `TypeAndId`, `Address`, `AddressEntry`, `Email`, `Telephone`, `Money`, `CustomField`, `PaymentTerm`, `WebLink`.
+All have `from_api(dict) -> Self` and `to_dict() -> dict`.
 
-**Per-resource model files** — inherit from generated base, add:
-- `from_api(dict) -> Self` handling nested objects and enums
-- `to_dict() -> dict` for sending back to the API
-- Computed properties:
-  - `Contact.full_name` → `"First Last"`
+Key design decisions:
+- `website: str | None` (single URL) — _not_ `websites: list[WebLink]` (spec uses a flat string)
+- `addresses: list[AddressEntry]` — typed wrapper (role + `Address` + `addressee`)
+- `CustomField.id` flattened from `definition.id` for convenience
+- `AddressEntry` extracts `addressee` from inside the nested `address` dict
+
+**Per-resource model files:**
+
+| File | Fields | Computed properties |
+|---|---|---|
+| `contact.py` | 24 | `full_name`, `primary_email`, `primary_phone`, `is_active` |
+| `company.py` | 22 + `related_*` optionals | `is_active`, `primary_email`, `primary_phone` |
+| `deal.py` | 19 | `is_open`, `is_won`, `is_lost`, `customer_id`, `customer_type` |
+| `invoice.py` | 19 | `is_paid`, `is_draft`, `is_overdue` (date-safe), `total_due`, `customer_name` |
+| `quotation.py` | 13 | `is_open`, `is_accepted`, `is_expired`, `total_tax_exclusive`, `total_tax_inclusive` |
+
+**Tests added:**
+- `tests/test_models.py` — 111 unit tests across all common sub-models and per-resource models; `is_overdue` edge cases use `@freeze_time`
+
+**Live test results (2026-02-25): 288/288 passing**
+
+| Suite | Count | Notes |
+|---|---|---|
+| `tests/test_auth.py` | 32 ✅ | unchanged |
+| `tests/test_client.py` | 31 ✅ | unchanged |
+| `tests/test_django_token_store.py` | 12 ✅ | unchanged |
+| `tests/test_teamleader_setup.py` | 9 ✅ | unchanged |
+| `tests/test_resources.py` | 93 ✅ | Phase 7 base (43) + Phase 9 extra methods (50) |
+| `tests/test_models.py` | 111 ✅ | Phase 8 — new |
+
 ---
 
-### 🔲 Phase 9 — Resource Implementations
+### ✅ Phase 9 — Resource Implementations
 
 | Resource | Extra methods |
 |---|---|
-| `ContactsResource` | `link_to_company`, `unlink_from_company`, `tag`, `untag` |
+| `ContactsResource` | `tag`, `untag`, `link_to_company`, `unlink_from_company` |
 | `CompaniesResource` | `tag`, `untag` |
-| `DealsResource` | `move_to_phase`, `win`, `lose`, `list_phases`, `list_sources` |
-| `InvoicesResource` | `book`, `credit`, `send`, `register_payment`, `download` |
-| `QuotationsResource` | `send`, `accept`, `decline` |
+| `DealsResource` | `move_to_phase`, `win`, `lose`, `list_phases` (`dealPhases.list`), `list_sources` (`dealSources.list`) |
+| `InvoicesResource` | `book`, `credit` → `TypeAndId`, `register_payment`, `send`, `download` → URL dict |
+| `QuotationsResource` | `send` (list of IDs + recipients), `accept` |
+
+Notes:
+- `list_phases` / `list_sources` call `dealPhases.list` / `dealSources.list` directly — separate API resource families
+- `invoices.download` returns `{"location": ..., "expires": ...}` (pre-signed URL), not raw bytes
+- `quotations.decline` does **not exist** in spec v1.112.0 — omitted
+- 50 unit tests added to `tests/test_resources.py` covering every extra method
 
 ---
 
@@ -416,8 +447,8 @@ Installation, Django configuration, non-Django usage, OAuth setup, codegen updat
 | 5 | ✅ | Django integration — `TeamleaderToken`, `DatabaseTokenBackend`, `teamleader_setup`, `get_client()` | 4 |
 | 6 | ✅ | HTTP client — `TeamleaderClient` | 3, 4 |
 | 7 | ✅ | `CrudResource` base class, `Page` | 6 |
-| 8 | 🔲 | Curated models — `common.py` + per-resource | 2 |
-| 9 | 🔲 | Resource implementations | 7, 8 |
+| 8 | ✅ | Curated models — `common.py` + per-resource; 111 unit tests | 2 |
+| 9 | ✅ | Resource implementations + 50 unit tests | 7, 8 |
 | 10 | 🔲 | Settings validation in `apps.py` | 5, 6 |
-| 11 | 🔲 | Tests (resources, models, remaining integration) | all |
+| 11 | 🔲 | Remaining integration tests | all |
 | 12 | 🔲 | README | all |

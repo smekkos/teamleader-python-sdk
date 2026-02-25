@@ -22,6 +22,7 @@ Python SDK for the [Teamleader Focus](https://www.teamleader.eu/) API.
 8. [Models and computed properties](#models-and-computed-properties)
 9. [Error handling](#error-handling)
 10. [Codegen — updating the generated layer](#codegen--updating-the-generated-layer)
+11. [Documentation — serving and building the docs](#documentation--serving-and-building-the-docs)
 
 ---
 
@@ -39,10 +40,10 @@ Python SDK for the [Teamleader Focus](https://www.teamleader.eu/) API.
 
 ```bash
 # Core only (non-Django projects, scripts, Celery workers)
-pip install teamleader-sdk
+pip install git+https://github.com/smekkos/teamleader-python-sdk.git
 
 # With Django integration
-pip install teamleader-sdk[django]
+pip install "git+https://github.com/smekkos/teamleader-python-sdk.git#egg=teamleader-sdk[django]"
 ```
 
 ---
@@ -384,3 +385,36 @@ git commit -m "chore: update generated layer to spec vX.Y.Z"
 
 The committed `codegen/spec/api.yaml` serves as a canonical snapshot for diffing against
 future spec versions.
+
+---
+
+## Documentation — serving and building the docs
+
+The docs are built with [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) and
+[mkdocstrings](https://mkdocstrings.github.io/). All required tools are included in the `dev`
+extras.
+
+### Install doc dependencies
+
+```bash
+pip install -e ".[dev]"
+```
+
+### Serve locally (live-reload)
+
+```bash
+mkdocs serve
+```
+
+Open <http://127.0.0.1:8000> in your browser. Pages and docstrings reload automatically on
+every save. The [`codegen/generate_docs_endpoints.py`](codegen/generate_docs_endpoints.py)
+build hook runs automatically so the generated API-reference page is always up to date.
+
+### Build static site
+
+```bash
+mkdocs build
+```
+
+Output is written to the `site/` directory (excluded from the package via
+`.gitignore`/`MANIFEST`).

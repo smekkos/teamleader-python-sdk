@@ -1,8 +1,8 @@
 site_name: teamleader-sdk
 site_description: Python SDK for the Teamleader Focus API
 site_url: ""
-repo_url: https://github.com/yourorg/teamleader-python-sdk
-repo_name: yourorg/teamleader-python-sdk
+repo_url: https://github.com/smekkos/teamleader-python-sdk
+repo_name: smekkos/teamleader-python-sdk
 
 theme:
   name: material

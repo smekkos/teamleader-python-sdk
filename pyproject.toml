@@ -35,7 +35,7 @@ dev = [
 ]
 
 [project.urls]
-Repository = "https://github.com/yourorg/teamleader-python-sdk"
+Repository = "https://github.com/smekkos/teamleader-python-sdk"
 
 [tool.setuptools.packages.find]
 include = ["teamleader*"]

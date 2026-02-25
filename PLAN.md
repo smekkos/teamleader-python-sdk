@@ -96,7 +96,7 @@ teamleader-sdk/
 │   │
 │   └── django/
 │       ├── __init__.py         ✅ import guard + get_client() — wired to DatabaseTokenBackend (Phase 5)
-│       ├── apps.py             🔲 TeamleaderConfig.ready() validation — Phase 10
+│       ├── apps.py             ✅ TeamleaderConfig.ready() with REQUIRED_SETTINGS_KEYS validation — Phase 10
 │       ├── models.py           ✅ TeamleaderToken singleton (pk=1 enforcement) — Phase 5
 │       ├── token_store.py      ✅ DatabaseTokenBackend (get/save/clear with select_for_update) — Phase 5
 │       ├── middleware.py       ✅ pass-through placeholder
@@ -108,8 +108,9 @@ teamleader-sdk/
 │
 ├── tests/
 │   ├── conftest.py             ✅ fixtures: backend, valid_token, expired_token, handler, token_response_body()
-│   ├── settings_test.py        ✅ minimal Django/SQLite settings for pytest-django (Phase 5)
+│   ├── settings_test.py        ✅ minimal Django/SQLite settings; TEAMLEADER dict added (Phase 5/10)
 │   ├── test_auth.py            ✅ 32 unit tests — Token, MemoryTokenBackend, OAuth2Handler (Phase 4)
+│   ├── test_django_apps.py     ✅ 16 unit tests — TeamleaderConfig.ready() validation (Phase 10)
 │   ├── test_django_token_store.py  ✅ 12 unit tests — DatabaseTokenBackend ORM (Phase 5)
 │   ├── test_teamleader_setup.py    ✅ 9 unit tests — _CallbackHandler HTTP (Phase 5)
 │   ├── test_resources.py       ✅ 93 unit tests — Page, CrudResource, all extra resource methods (Phase 7/9)
@@ -123,7 +124,7 @@ teamleader-sdk/
 ├── pyproject.toml              ✅ teamleader-sdk 0.1.0 — dev extras include freezegun, pytest-django
 ├── .gitignore                  ✅ Python/Django patterns
 ├── .env.example                ✅
-└── README.md                   🔲 Phase 13
+└── README.md                   ✅ Phase 12
 ```
 
 ---
@@ -406,32 +407,51 @@ Notes:
 
 ---
 
-### 🔲 Phase 10 — Settings Validation
+### ✅ Phase 10 — Settings Validation
 
-`TeamleaderConfig.ready()` in `teamleader/django/apps.py`:
-- Check `settings.TEAMLEADER` exists
-- Check required keys: `CLIENT_ID`, `CLIENT_SECRET`, `REDIRECT_URI`, `SCOPES`
-- Raise `django.core.exceptions.ImproperlyConfigured` with an actionable message listing missing keys
+**`teamleader/django/apps.py`** — `TeamleaderConfig.ready()`:
+- Constant `REQUIRED_SETTINGS_KEYS = frozenset({"CLIENT_ID", "CLIENT_SECRET", "REDIRECT_URI", "SCOPES"})`
+- `getattr(settings, "TEAMLEADER", None)` → raises `ImproperlyConfigured` if not a `dict`
+- `REQUIRED_SETTINGS_KEYS - cfg.keys()` → raises `ImproperlyConfigured` naming the missing keys
+- Error messages include an actionable settings snippet
+
+**`tests/settings_test.py`** — added minimal valid `TEAMLEADER` dict so `ready()` passes at startup.
+
+**`tests/test_django_apps.py`** — 16 unit tests using `@override_settings`:
+- 5 tests: absent/non-dict values (`None`, `str`, `int`, `list`, missing entirely)
+- 6 tests: one missing required key per key + all missing + error message lists them
+- 3 tests: happy path — all keys present, extra keys accepted, optional `TOKEN_BACKEND` accepted
+- 2 tests: `REQUIRED_SETTINGS_KEYS` constant is correct and is a `frozenset`
+
+**Live test results (2026-02-25): 304/304 passing**
+
+| Suite | Count | Notes |
+|---|---|---|
+| All previous suites | 288 ✅ | unchanged |
+| `tests/test_django_apps.py` | 16 ✅ | Phase 10 — new |
 
 ---
 
-### 🔲 Phase 11 — Tests
-
-**Unit tests** (`tests/`, uses `responses` library to mock HTTP)
-- `conftest.py`: `TeamleaderClient` with `MemoryTokenBackend` pre-loaded with valid + expired tokens
-- `test_auth.py`: `is_expired`, refresh flow, `TeamleaderAuthExpiredError` on 401
-- `test_resources.py`: list/get/create/update/delete per resource; pagination; `iterate()` across pages
-- `test_models.py`: `from_api` round-trips; `full_name`; `is_overdue`
+### 🔲 Phase 11 — Remaining Integration Tests
 
 **Integration tests** (`tests/integration/`, skipped without env vars)
-- `conftest.py`: auto-skip if `TEAMLEADER_INTEGRATION_CLIENT_ID` absent
-- Read-only where possible; create+delete cycles for mutation coverage
+- `test_deals.py`: list deals, get deal, move phase; read-only where possible
+- Additional create+delete cycles for contacts, companies for mutation coverage
 
 ---
 
-### 🔲 Phase 12 — README
+### ✅ Phase 12 — README
 
-Installation, Django configuration, non-Django usage, OAuth setup, codegen update workflow.
+[`README.md`](README.md) covers:
+1. Requirements and installation (`pip install teamleader-sdk[django]`)
+2. Django setup — `INSTALLED_APPS`, settings dict, migrations, `teamleader_setup`
+3. Non-Django quick-start — `MemoryTokenBackend` + `OAuth2Handler` + `TeamleaderClient`
+4. CRUD methods — `list`, `get`, `create`, `update`, `delete`
+5. Pagination — `Page`, `has_next`, `next()`, `iterate()`
+6. Per-resource extra methods — contacts/companies/deals/invoices/quotations
+7. Models and computed properties cheat-sheet
+8. Error handling — exception hierarchy + usage pattern
+9. Codegen update workflow — `python codegen/generate.py`
 
 ---
 
@@ -449,6 +469,6 @@ Installation, Django configuration, non-Django usage, OAuth setup, codegen updat
 | 7 | ✅ | `CrudResource` base class, `Page` | 6 |
 | 8 | ✅ | Curated models — `common.py` + per-resource; 111 unit tests | 2 |
 | 9 | ✅ | Resource implementations + 50 unit tests | 7, 8 |
-| 10 | 🔲 | Settings validation in `apps.py` | 5, 6 |
+| 10 | ✅ | Settings validation in `apps.py`; 16 unit tests | 5, 6 |
 | 11 | 🔲 | Remaining integration tests | all |
-| 12 | 🔲 | README | all |
+| 12 | ✅ | README | all |

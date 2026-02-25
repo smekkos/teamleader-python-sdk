@@ -1,5 +1,8 @@
-"""Minimal Django settings used by pytest-django when running
-tests/test_django_token_store.py.
+"""Minimal Django settings used by pytest-django.
+
+Includes a valid TEAMLEADER dict so that TeamleaderConfig.ready()
+passes on startup — individual tests may override it via
+``@override_settings(TEAMLEADER=...)``.
 
 Not for production use.
 """
@@ -29,3 +32,12 @@ MIGRATION_MODULES: dict[str, None] = {
 
 # Store datetimes in UTC.
 USE_TZ = True
+
+# Minimal valid TEAMLEADER config so TeamleaderConfig.ready() passes at startup.
+# Individual tests override this via @override_settings(TEAMLEADER=...).
+TEAMLEADER = {
+    "CLIENT_ID": "test-client-id",
+    "CLIENT_SECRET": "test-client-secret",
+    "REDIRECT_URI": "http://localhost:9999/callback",
+    "SCOPES": ["contacts", "deals"],
+}

@@ -11,12 +11,37 @@ from teamleader.resources.base import CrudResource
 class DealsResource(CrudResource[Deal]):
     """CRUD + extra actions for Teamleader deals.
 
-    Inherits :meth:`list`, :meth:`get`, :meth:`create`, :meth:`update`,
-    :meth:`delete`, and :meth:`iterate` from :class:`~teamleader.resources.base.CrudResource`.
+    Inherits :meth:`list`, :meth:`get`, :meth:`update`, :meth:`delete`, and
+    :meth:`iterate` from :class:`~teamleader.resources.base.CrudResource`.
+    :meth:`create` is overridden because Teamleader uses ``deals.create``
+    (not ``deals.add``) and always assigns its own UUID.
     """
 
     prefix = "deals"
     model = Deal
+
+    # ------------------------------------------------------------------
+    # Create override
+    # ------------------------------------------------------------------
+
+    def create(self, **kwargs: Any) -> Deal:
+        """Create a new deal and return the fully-populated model.
+
+        POSTs ``kwargs`` to ``deals.create``.  Unlike contacts/companies,
+        Teamleader always assigns its own UUID for deals — do **not** include
+        an ``id`` field in ``kwargs``.  The API returns a minimal reference
+        ``{"data": {"type": "deal", "id": "..."}}``; this method re-fetches the
+        full object via :meth:`get` before returning.
+
+        Parameters
+        ----------
+        **kwargs:
+            Fields accepted by the ``deals.create`` endpoint (``title``,
+            ``lead``, ``estimated_value``, ``custom_fields``, etc.).
+        """
+        resp = self._client._post("deals.create", kwargs)
+        new_id: str = resp["data"]["id"]
+        return self.get(new_id)
 
     # ------------------------------------------------------------------
     # Status transitions

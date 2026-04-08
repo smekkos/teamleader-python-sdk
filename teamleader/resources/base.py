@@ -162,9 +162,21 @@ class CrudResource(Generic[M]):
             :data:`~teamleader.constants.DEFAULT_PAGE_SIZE` (20).
         **filters:
             Extra top-level body parameters forwarded to the API, e.g.
-            ``filter={"email": "..."}``, ``sort=[...]``, ``includes=[...]``.
+            ``filter={...}``, ``sort=[...]``, ``includes=[...]``.
             These are stored on the returned :class:`Page` so that
             :meth:`Page.next` can continue with the same filters.
+
+            .. note::
+                The email filter accepted by ``contacts.list`` and
+                ``companies.list`` expects a **typed object**, not a bare
+                string.  Pass it as::
+
+                    filter={"email": {"type": "primary", "email": "foo@bar.com"}}
+
+                This mirrors the :class:`~teamleader.models.common.Email`
+                dataclass shape (``type`` is ``"primary"`` or
+                ``"invoicing"``).  Passing a plain string produces an API
+                error: ``"type must be present; email must be present"``.
 
         Returns
         -------

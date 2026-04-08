@@ -148,7 +148,7 @@ class Deal:
             "id": self.id,
             "title": self.title,
             "status": self.status,
-            "custom_fields": [cf.to_dict() for cf in self.custom_fields],
+            "custom_fields": [cf.to_write_dict() for cf in self.custom_fields],
         }
         if self.summary is not None:
             out["summary"] = self.summary

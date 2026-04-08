@@ -30,6 +30,7 @@ dev = [
     "PyYAML>=6.0",
     "python-dotenv",
     # documentation
+    "mkdocs>=1.5,<2",              # MkDocs 2.0 is incompatible with mkdocs-material
     "mkdocs-material>=9.5",
     "mkdocstrings[python]>=0.25",
 ]

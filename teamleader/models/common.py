@@ -172,10 +172,24 @@ class CustomField:
         )
 
     def to_dict(self) -> dict[str, Any]:
+        """Serialise to the read-side shape returned by ``*.info`` / ``*.list``.
+
+        Use :meth:`to_write_dict` when constructing payloads for
+        ``*.create`` or ``*.update`` endpoints.
+        """
         return {
             "definition": self.definition or {"id": self.id, "type": "customFieldDefinition"},
             "value": self.value,
         }
+
+    def to_write_dict(self) -> dict[str, Any]:
+        """Serialise to the write shape required by ``*.create`` / ``*.update``.
+
+        The Teamleader API expects ``{"id": "<definition-uuid>", "value": ...}``
+        — **not** the ``{"definition": {...}, "value": ...}`` wrapper that is
+        returned by GET endpoints and produced by :meth:`to_dict`.
+        """
+        return {"id": self.id, "value": self.value}
 
 
 @dataclass

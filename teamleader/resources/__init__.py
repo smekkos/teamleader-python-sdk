@@ -9,6 +9,7 @@ Full implementation in Phases 7 and 9.
 from teamleader.resources.companies import CompaniesResource
 from teamleader.resources.contacts import ContactsResource
 from teamleader.resources.deals import DealsResource
+from teamleader.resources.files import FilesResource
 from teamleader.resources.invoices import InvoicesResource
 from teamleader.resources.quotations import QuotationsResource
 
@@ -16,6 +17,7 @@ __all__ = [
     "CompaniesResource",
     "ContactsResource",
     "DealsResource",
+    "FilesResource",
     "InvoicesResource",
     "QuotationsResource",
 ]

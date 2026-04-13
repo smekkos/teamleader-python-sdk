@@ -1,7 +1,7 @@
 # Working with Resources
 
-Every resource on `TeamleaderClient` exposes the same five CRUD methods plus
-resource-specific extra actions.  The five curated resources are:
+Every resource on `TeamleaderClient` exposes the same CRUD methods plus
+resource-specific extra actions.  The curated resources are:
 
 | Attribute | Resource class | Model |
 |---|---|---|
@@ -10,6 +10,7 @@ resource-specific extra actions.  The five curated resources are:
 | `client.deals` | `DealsResource` | `Deal` |
 | `client.invoices` | `InvoicesResource` | `Invoice` |
 | `client.quotations` | `QuotationsResource` | `Quotation` |
+| `client.files` | `FilesResource` | `File` |
 
 ---
 
@@ -180,6 +181,60 @@ client.quotations.send(
 # Mark a quotation as accepted
 client.quotations.accept(quotation_id)
 ```
+
+### Files
+
+Files use a two-step upload flow and do not support `create()`, `update()`, or `iterate()`.
+
+```python
+import json
+from teamleader import File
+
+# Step 1+2 in one call — upload raw bytes and get back the file UUID
+file_id = client.files.upload_content(
+    "order_123.json",
+    json.dumps({"order": 42}).encode(),
+    subject={"type": "deal", "id": deal_id},
+    # content_type defaults to "application/octet-stream"
+)
+
+# Get a temporary download URL (valid for a few minutes)
+link = client.files.download(file_id)["location"]
+
+# Full file details
+f: File = client.files.get(file_id)
+print(f.name, f.size, f.mime_type)
+
+# List all files attached to an entity (filter is required)
+page = client.files.list(
+    filter={"subject": {"type": "deal", "id": deal_id}},
+    page_size=20,
+)
+for f in page.data:
+    print(f.name, f.size)
+
+# Paginate manually — iterate() is not supported for files
+while page.has_next:
+    page = page.next()
+    for f in page.data:
+        print(f.name)
+
+# Delete a file permanently
+client.files.delete(file_id)
+```
+
+!!! note "Upload flow"
+    `upload_content()` is a convenience wrapper.  Internally it calls `upload()` to
+    obtain a short-lived signed URL, then POSTs the raw bytes to that URL.
+    Use `upload()` directly if you need the signed URL for out-of-process uploads.
+
+!!! warning "Content-Type"
+    The Teamleader upload endpoint requires `Content-Type: application/octet-stream`
+    (the default).  Passing `application/json` or other MIME types returns a 400 error.
+
+!!! warning "`files.list` requires a real entity subject"
+    Temporary files (`{"type": "temporary"}`) cannot be used as a `files.list` filter.
+    The API rejects temporary subjects — always pass a company, contact, deal, or similar.
 
 ---
 

@@ -46,6 +46,7 @@ from teamleader.exceptions import (
 from teamleader.resources.companies import CompaniesResource
 from teamleader.resources.contacts import ContactsResource
 from teamleader.resources.deals import DealsResource
+from teamleader.resources.files import FilesResource
 from teamleader.resources.invoices import InvoicesResource
 from teamleader.resources.quotations import QuotationsResource
 
@@ -82,6 +83,7 @@ class TeamleaderClient:
         self.deals: DealsResource = DealsResource(self)
         self.invoices: InvoicesResource = InvoicesResource(self)
         self.quotations: QuotationsResource = QuotationsResource(self)
+        self.files: FilesResource = FilesResource(self)
 
     # ------------------------------------------------------------------
     # Public generic caller

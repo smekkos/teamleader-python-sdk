@@ -18,7 +18,7 @@ for usage examples.
 
 ### CrudResource
 
-`CrudResource[M]` is the base class for all five curated resources.
+`CrudResource[M]` is the base class for all curated resources.
 
 ::: teamleader.resources.base.CrudResource
 
@@ -51,3 +51,9 @@ for usage examples.
 ## Quotations
 
 ::: teamleader.resources.quotations.QuotationsResource
+
+---
+
+## Files
+
+::: teamleader.resources.files.FilesResource

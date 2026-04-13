@@ -59,6 +59,12 @@ These sub-models are shared across multiple resource models.
 
 ---
 
+## File
+
+::: teamleader.models.file.File
+
+---
+
 ## Computed properties cheat-sheet
 
 ### Contact

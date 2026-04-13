@@ -20,6 +20,7 @@ from teamleader.models.common import (
 from teamleader.models.company import Company
 from teamleader.models.contact import Contact
 from teamleader.models.deal import Deal
+from teamleader.models.file import File
 from teamleader.models.invoice import Invoice
 from teamleader.models.quotation import Quotation
 
@@ -38,6 +39,7 @@ __all__ = [
     "Company",
     "Contact",
     "Deal",
+    "File",
     "Invoice",
     "Quotation",
 ]
